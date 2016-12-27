@@ -8,7 +8,7 @@
 
 # Python virtual environment
 /venv/
-
+/test-data/
 
 # Eclipse and mac
 .DS_Store
