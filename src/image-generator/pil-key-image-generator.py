@@ -1,14 +1,15 @@
-'''
+''' Generates png (lossless) outputs for short input text.
 
 References:
 Image Module
 https://pillow.readthedocs.io/en/3.4.x/reference/Image.html
-
 ImageDraw Module
 https://pillow.readthedocs.io/en/3.4.x/reference/ImageDraw.html
-
 ImageFont
 https://pillow.readthedocs.io/en/3.4.x/reference/ImageFont.html
+
+Notes:
+Consider using jpg to reduce the size of the outputs if needed.
 
 '''
 

@@ -1,10 +1,4 @@
-'''
-This is a way to generate a video from Images using OpenCV.
-
-Note: I have not been able to find a good way to add Audio along with the Images. One
-solution is to separately generate a video using OpenCV and an  track using pyaudio and
-then use ffmpeg to mux them together. However, I could also use ffmpeg directly if it allows us to do both in one shot. Benchmarkings
-should make things clearer once both impls are available.
+''' This is a way to generate a video from Images using OpenCV.
 
 References:
 OpenCV documentation:
@@ -12,6 +6,12 @@ http://docs.opencv.org/2.4/modules/highgui/doc/reading_and_writing_images_and_vi
 PyAudio:
 http://people.csail.mit.edu/hubert/pyaudio/
 
+Notes:
+I have not been able to find a good way to add Audio along with the Images. One
+solution is to separately generate a video using OpenCV and an  track using
+pyaudio and then use ffmpeg to mux them together. However, I could also use
+ffmpeg directly if it allows us to do both in one shot. Benchmarkings should
+make things clearer once both impls are available.
 
 Benchmark results:
 1fps  : 0.6s,    160KB  (no blending)
@@ -19,9 +19,6 @@ Benchmark results:
 10 fps: 5.5s,    1.3 MB (3 second blend)
 60 fps: 16.s,    1.6MB  (no blending)
 60 fps: 31s,     4.9MB  (3 second blending)
-
-As we can see, transition animations are extremly expensive.
-Increasing FPS is extremly expensive.
 
 '''
 

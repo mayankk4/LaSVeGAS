@@ -1,12 +1,10 @@
-'''
+''' Generates png (lossless) outputs for paragraphs.
 
 References:
 Image Module
 https://pillow.readthedocs.io/en/3.4.x/reference/Image.html
-
 ImageDraw Module
 https://pillow.readthedocs.io/en/3.4.x/reference/ImageDraw.html
-
 ImageFont
 https://pillow.readthedocs.io/en/3.4.x/reference/ImageFont.html
 
