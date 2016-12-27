@@ -5,7 +5,7 @@ https://docs.google.com/document/d/1OQABNMRc1sKBlmDgNly1RI8DmX0vEqEmCt6j4h7nEA4/
 
 ## Mac Setup
 Install brew  
-    
+
     /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 
 Install python and pip  
@@ -16,6 +16,11 @@ Install python and pip
 Create a virtual environment within lasvegas/  
 http://docs.python-guide.org/en/latest/dev/virtualenvs/#virtualenvironments-ref
 
+Install lint  
+
+    source venv/bin/activate
+    pip install pep8
+    pip install autopep8
 
 ## Setup for video generator
 install pil  
@@ -25,8 +30,13 @@ install pil
 install cv2, numpy  
 
 
+## Submitting  
+autolint the files before checking in.
+
+    autopep8 ./src/ --recursive --in-place --pep8-passes 2000 --verbose
+
 
 ## Running the pipeline for a single KV pair.
 This assumes that test-data/ is correctly setup.  
 
-    time sh lasvegas_tool.sh 
+    time sh lasvegas_tool.sh
