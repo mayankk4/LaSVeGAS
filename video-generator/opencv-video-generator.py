@@ -3,14 +3,12 @@ This is a way to generate a video from Images using OpenCV.
 
 Note: I have not been able to find a good way to add Audio along with the Images. One
 solution is to separately generate a video using OpenCV and an  track using pyaudio and
-then use ffmpeg to mux them together after the hour has finished recording. However, I
-could also use ffmpeg directly if it allows us to do both in one shot. Benchmarkings
+then use ffmpeg to mux them together. However, I could also use ffmpeg directly if it allows us to do both in one shot. Benchmarkings
 should make things clearer once both impls are available.
 
 References:
 OpenCV documentation:
 http://docs.opencv.org/2.4/modules/highgui/doc/reading_and_writing_images_and_video.html
-
 PyAudio:
 http://people.csail.mit.edu/hubert/pyaudio/
 
