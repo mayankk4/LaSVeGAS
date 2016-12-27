@@ -8,7 +8,7 @@ Install brew
 
     /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 
-Install python and pip  
+Install python and pip (We use Python 2.7)  
 
     brew install python
     sudo easy_install pip
@@ -29,9 +29,14 @@ install pil
 
 install cv2, numpy  
 
+## Setup for Audio generator
+
+    pip install pyttsx
+    pip install pyobjc
+    pip install gTTS
 
 ## Submitting  
-autolint the files before checking in.
+Please autolint the files before checking in.
 
     autopep8 ./src/ --recursive --in-place --pep8-passes 2000 --verbose
 
