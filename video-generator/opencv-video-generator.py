@@ -34,24 +34,30 @@ Increasing FPS is extremly expensive.
 from PIL import Image
 import numpy, cv2
 
+FPS = 5
+KEY_IMAGE_DURATION = 2
+VALUE_IMAGE_DURATION = 3
+
 # Load up the first and second demo images
-image1 = Image.open("./test-data/image/empressite_1.png")
-image2 = Image.open("./test-data/image/empressite_2.png")
+keyImage = Image.open("./test-data/image/key.png")
+valueImage = Image.open("./test-data/image/value.png")
 
 # Grab the stats from image1 to use for the resultant video
-height, width, layers =  numpy.array(image1).shape
+# We expect both the images to be of the same size.
+height, width, layers =  numpy.array(keyImage).shape
 
 # Create the OpenCV VideoWriter
 video = cv2.VideoWriter("./test-data/video/empressite.avi", # Filename
                         -1, # codec
-                        5, # FPS
+                        FPS, # FPS
                         (width,height))
 
 # Write image1 - 2 seconds
-for i in xrange(0,10):
-    video.write(cv2.cvtColor(numpy.array(image1), cv2.COLOR_RGB2BGR))
+for i in xrange(0, FPS*KEY_IMAGE_DURATION):
+    video.write(cv2.cvtColor(numpy.array(keyImage), cv2.COLOR_RGB2BGR))
 
 
+# Uncomment to add transition.
 # Transition - 3 second
 # for i in xrange(0,180):
 #     mergedImage = Image.blend(image1, image2, i/180.0) # NOTE: denominator needs float.
@@ -59,8 +65,8 @@ for i in xrange(0,10):
 
 
 # Write image2 - 6 seconds
-for i in xrange(0,15):
-    video.write(cv2.cvtColor(numpy.array(image2), cv2.COLOR_RGB2BGR))
+for i in xrange(0,FPS*VALUE_IMAGE_DURATION):
+    video.write(cv2.cvtColor(numpy.array(valueImage), cv2.COLOR_RGB2BGR))
 
 
 # Release the video for it to be committed to a file
