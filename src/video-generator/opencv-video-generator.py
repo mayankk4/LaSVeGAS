@@ -30,7 +30,8 @@ Increasing FPS is extremly expensive.
 # Set conventions for input/output
 
 from PIL import Image
-import numpy, cv2
+import numpy
+import cv2
 
 FPS = 5
 KEY_IMAGE_DURATION = 2
@@ -42,16 +43,16 @@ valueImage = Image.open("./test-data/image/value.png")
 
 # Grab the stats from image1 to use for the resultant video
 # We expect both the images to be of the same size.
-height, width, layers =  numpy.array(keyImage).shape
+height, width, layers = numpy.array(keyImage).shape
 
 # Create the OpenCV VideoWriter
-video = cv2.VideoWriter("./test-data/video/empressite.avi", # Filename
-                        -1, # codec
-                        FPS, # FPS
-                        (width,height))
+video = cv2.VideoWriter("./test-data/video/empressite.avi",  # Filename
+                        -1,  # codec
+                        FPS,  # FPS
+                        (width, height))
 
 # Write image1 - 2 seconds
-for i in xrange(0, FPS*KEY_IMAGE_DURATION):
+for i in xrange(0, FPS * KEY_IMAGE_DURATION):
     video.write(cv2.cvtColor(numpy.array(keyImage), cv2.COLOR_RGB2BGR))
 
 
@@ -63,7 +64,7 @@ for i in xrange(0, FPS*KEY_IMAGE_DURATION):
 
 
 # Write image2 - 6 seconds
-for i in xrange(0,FPS*VALUE_IMAGE_DURATION):
+for i in xrange(0, FPS * VALUE_IMAGE_DURATION):
     video.write(cv2.cvtColor(numpy.array(valueImage), cv2.COLOR_RGB2BGR))
 
 
