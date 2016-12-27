@@ -10,13 +10,13 @@ time <5s
 file-size <100KB
 
 '''
-#TODO: Pass the text/language as flags.
-#TODO: Maybe edit the speed/accent of the audio.
+# TODO: Pass the text/language as flags.
+# TODO: Maybe edit the speed/accent of the audio.
 
 from gtts import gTTS
 import os
 
-LANGUAGE='en'
+LANGUAGE = 'en'
 
 # a^{2}+b^{2}=c^{2}
 keyText = "Empressite."
