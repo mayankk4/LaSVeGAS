@@ -35,6 +35,10 @@ install cv2, numpy
     pip install pyobjc
     pip install gTTS
 
+# Setup for Uploader
+
+    git update-index --assume-unchanged path/to/client_secrets.json
+
 ## Submitting  
 Please autolint the files before checking in.
 
