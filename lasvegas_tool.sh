@@ -19,14 +19,14 @@ source venv/bin/activate
 
 # generate image
 echo "Generating images."
-python ./image-generator/pil-key-image-generator.py
-python ./image-generator/pil-value-image-generator.py
+python ./src/image-generator/pil-key-image-generator.py
+python ./src/image-generator/pil-value-image-generator.py
 
 # generate audio
 
 # generate video
 echo "Generating video."
-python ./video-generator/opencv-video-generator.py
+python ./src/video-generator/opencv-video-generator.py
 
 
 # deactivate virtual env
