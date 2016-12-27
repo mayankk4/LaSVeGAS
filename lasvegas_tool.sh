@@ -9,7 +9,7 @@ echo "Running the pipeline for a single input."
 
 # clear folders except input.
 # rm ./test-data/audio/*
-# rm ./test-data/image/*
+rm ./test-data/image/*
 rm ./test-data/video/*
 
 
@@ -18,6 +18,9 @@ source venv/bin/activate
 
 
 # generate image
+echo "Generating images."
+python ./image-generator/pil-key-image-generator.py
+python ./image-generator/pil-value-image-generator.py
 
 # generate audio
 
