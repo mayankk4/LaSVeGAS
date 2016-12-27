@@ -10,6 +10,8 @@ time <5s
 file-size <100KB
 
 '''
+#TODO: Pass the text/language as flags.
+#TODO: Maybe edit the speed/accent of the audio.
 
 from gtts import gTTS
 import os
@@ -21,7 +23,7 @@ keyText = "Empressite."
 valueText = "Empressite is a mineral form of silver telluride, AgTe. It is a rare, grey, orthorhombic mineral with which can form compact masses, rarely as bipyrimidal crystals."
 
 ttsKey = gTTS(text=keyText, lang=LANGUAGE)
-ttsKey.save("key.mp3")
+ttsKey.save("./test-data/audio/key.mp3")
 
 ttsValue = gTTS(text=valueText, lang=LANGUAGE)
-ttsValue.save("value.mp3")
+ttsValue.save("./test-data/audio/value.mp3")

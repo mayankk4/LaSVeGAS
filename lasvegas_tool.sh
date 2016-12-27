@@ -7,8 +7,9 @@
 # Run this script from ./lasvegas
 echo "Running the pipeline for a single input."
 
+
 # clear folders except input.
-# rm ./test-data/audio/*
+rm ./test-data/audio/*
 rm ./test-data/image/*
 rm ./test-data/video/*
 
@@ -23,6 +24,9 @@ python ./src/image-generator/pil-key-image-generator.py
 python ./src/image-generator/pil-value-image-generator.py
 
 # generate audio
+echo "Generating audio."
+python ./src/audio-generator/gtts-audio-generator.py
+
 
 # generate video
 echo "Generating video."
