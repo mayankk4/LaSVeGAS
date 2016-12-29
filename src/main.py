@@ -7,10 +7,10 @@ Please use lasvegas_tool.sh to run the pipeline in debug mode.
 2. For each KV-pair in the dump,
     - generate image files
     - generate audio files
-    - generate a silent video file using images
-    - mux the silent video and the audio files to generate the final output.
+    - mux the images and the audio files to generate the final output.
 
 '''
+
 from imagegenerator import *
 from audiogenerator import *
 from videogenerator import *
