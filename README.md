@@ -35,11 +35,11 @@ install cv2, numpy
     pip install pyobjc
     pip install gTTS
 
-# Setup for Uploader
+## Setup for Uploader
 
     git update-index --assume-unchanged path/to/client_secrets.json
 
-# Setup for video muxing
+## Setup for video muxing
 For this, we need to install ffmpeg since we simply invoke it using a subprocess.  
 
     brew install ffmpeg --with-fdk-aac --with-ffplay --with-freetype --with-libass --with-libquvi --with-libvorbis --with-libvpx --with-opus --with-x265 --with-frei0r  --with-libvo-aacenc --with-opencore-amr --with-openjpeg --with-rtmpdump --with-schroedinger --with-speex --with-theora --with-tools --with-openssl --with-rtmpdump  --with-faac --with-lame --with-x264 --with-xvid
