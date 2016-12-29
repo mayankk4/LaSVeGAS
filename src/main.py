@@ -32,10 +32,12 @@ pil_key_image_generator.GenerateImage(INPUT_KEY, KEY_IMAGE_PATH)
 pil_value_image_generator.GenerateImage(INPUT_VALUE, VALUE_IMAGE_PATH)
 
 # Generate audio
-gtts_audio_generator.GenerateAudio(INPUT_KEY, INPUT_VALUE, KEY_AUDIO_PATH, VALUE_AUDIO_PATH)
+gtts_audio_generator.GenerateAudio(
+    INPUT_KEY, INPUT_VALUE, KEY_AUDIO_PATH, VALUE_AUDIO_PATH)
 
 # Generate video
-opencv_silent_video_generator.GenerateSilentVideo(KEY_IMAGE_PATH, VALUE_IMAGE_PATH, SILENT_VIDEO_PATH)
+opencv_silent_video_generator.GenerateSilentVideo(
+    KEY_IMAGE_PATH, VALUE_IMAGE_PATH, SILENT_VIDEO_PATH)
 
 # Mux
 ffmpeg_av_mux.AvMux(VALUE_AUDIO_PATH, SILENT_VIDEO_PATH, FINAL_OUTPUT_PATH)

@@ -28,6 +28,7 @@ BG_COLOR = (255, 147, 41)
 # SHADOW_COLOR = "black"
 TEXT_COLOR = "black"
 
+
 def GenerateImage(text, output_path):
     print "Generating Image for the value: " + text
 

@@ -8,7 +8,7 @@ http://people.csail.mit.edu/hubert/pyaudio/
 
 Notes:
 I have not been able to find a good way to add Audio along with the Images. One
-solution is to separately generate a video using OpenCV and an  track using
+solution is to separately generate a video using OpenCV and an audio track using
 pyaudio and then use ffmpeg to mux them together. However, I could also use
 ffmpeg directly if it allows us to do both in one shot. Benchmarkings should
 make things clearer once both impls are available.
@@ -33,6 +33,7 @@ FPS = 5
 KEY_IMAGE_DURATION = 2
 VALUE_IMAGE_DURATION = 3
 
+
 def GenerateSilentVideo(key_image_path, value_image_path, output_path):
     print "Generating a silent video now."
     # Load up the first and second demo images
@@ -53,18 +54,15 @@ def GenerateSilentVideo(key_image_path, value_image_path, output_path):
     for i in xrange(0, FPS * KEY_IMAGE_DURATION):
         video.write(cv2.cvtColor(numpy.array(keyImage), cv2.COLOR_RGB2BGR))
 
-
     # Uncomment to add transition.
     # Transition - 3 second
     # for i in xrange(0,180):
     #     mergedImage = Image.blend(image1, image2, i/180.0) # NOTE: denominator needs float.
     #     video.write(cv2.cvtColor(numpy.array(mergedImage), cv2.COLOR_RGB2BGR))
 
-
     # Write image2 - 6 seconds
     for i in xrange(0, FPS * VALUE_IMAGE_DURATION):
         video.write(cv2.cvtColor(numpy.array(valueImage), cv2.COLOR_RGB2BGR))
-
 
     # Release the video for it to be committed to a file
     video.release()

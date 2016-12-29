@@ -1,1 +1,1 @@
-__all__ = ["gtts_audio_generator",]
+__all__ = ["gtts_audio_generator", ]

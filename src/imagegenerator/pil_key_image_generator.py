@@ -37,6 +37,7 @@ TEXT_COLOR = "white"
 FONT_SIZE = 250
 SHADOW_WIDTH = 2
 
+
 def GenerateImage(text, output_path):
     print "Generating Image for the key: " + text
     # Create an image with a bg colour.
