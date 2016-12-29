@@ -18,20 +18,8 @@ rm ./test-data/video/*
 source venv/bin/activate
 
 
-# generate image
-echo "Generating images."
-python ./src/image-generator/pil-key-image-generator.py
-python ./src/image-generator/pil-value-image-generator.py
-
-# generate audio
-echo "Generating audio."
-python ./src/audio-generator/gtts-audio-generator.py
-
-
-# generate video
-echo "Generating video."
-python ./src/video-generator/opencv-video-generator.py
-
+echo "Running the pipeline."
+python ./src/main.py
 
 # deactivate virtual env
 deactivate

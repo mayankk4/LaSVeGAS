@@ -11,7 +11,7 @@ time <5s
 file-size <100KB
 
 '''
-# TODO: Pass the text/language as flags.
+# TODO: Pass the language and other configs as flags.
 # TODO: Maybe edit the speed/accent of the audio.
 
 from gtts import gTTS
@@ -19,13 +19,11 @@ import os
 
 LANGUAGE = 'en'
 
-def GenerateAudio():
-    print "Generating Audio."
-    keyText = "Empressite."
-    valueText = "Empressite is a mineral form of silver telluride, AgTe. It is a rare, grey, orthorhombic mineral with which can form compact masses, rarely as bipyrimidal crystals."
+def GenerateAudio(key_text, value_text, key_output_path, value_output_path):
+    print "Generating Audio now."
 
-    ttsKey = gTTS(text=keyText, lang=LANGUAGE)
-    ttsKey.save("./test-data/audio/key.mp3")
+    ttsKey = gTTS(text=key_text, lang=LANGUAGE)
+    ttsKey.save(key_output_path)
 
-    ttsValue = gTTS(text=valueText, lang=LANGUAGE)
-    ttsValue.save("./test-data/audio/value.mp3")
+    ttsValue = gTTS(text=value_text, lang=LANGUAGE)
+    ttsValue.save(value_output_path)

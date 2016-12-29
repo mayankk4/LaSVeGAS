@@ -37,32 +37,32 @@ TEXT_COLOR = "white"
 FONT_SIZE = 250
 SHADOW_WIDTH = 2
 
-# Create an image with a bg colour.
-img = Image.new("RGBA", (MAX_W, MAX_H), BG_COLOR)
-draw = ImageDraw.Draw(img)
+def GenerateImage(text, output_path):
+    print "Generating Image for the key: " + text
+    # Create an image with a bg colour.
+    img = Image.new("RGBA", (MAX_W, MAX_H), BG_COLOR)
+    draw = ImageDraw.Draw(img)
 
-# Now add text to the image.
-text = '''Empressite'''
+    # TODO: Store the font file locally
+    font = ImageFont.truetype("Georgia.ttf", FONT_SIZE)
 
-# TODO: Store the font file locally
-font = ImageFont.truetype("Georgia.ttf", FONT_SIZE)
+    # A sample text addition
+    # .text((10,10), "Empressite", fill=None, font=font, anchor=None, spacing=0, align="center")
 
-# A sample text addition
-# .text((10,10), "Empressite", fill=None, font=font, anchor=None, spacing=0, align="center")
+    # Get coordinates for drawing text
+    w, h = draw.textsize(text, font=font)
+    x = (MAX_W - w) / 2
+    y = (MAX_H - h) / 2
 
-# Get coordinates for drawing text
-w, h = draw.textsize(text, font=font)
-x = (MAX_W - w) / 2
-y = (MAX_H - h) / 2
+    # Now add text to the image.
+    # Adding shadows first.
+    draw.text((x - SHADOW_WIDTH, y), text, font=font, fill=SHADOW_COLOR)
+    draw.text((x + SHADOW_WIDTH, y), text, font=font, fill=SHADOW_COLOR)
+    draw.text((x, y - SHADOW_WIDTH), text, font=font, fill=SHADOW_COLOR)
+    draw.text((x, y + SHADOW_WIDTH), text, font=font, fill=SHADOW_COLOR)
 
-# Adding shadows first.
-draw.text((x - SHADOW_WIDTH, y), text, font=font, fill=SHADOW_COLOR)
-draw.text((x + SHADOW_WIDTH, y), text, font=font, fill=SHADOW_COLOR)
-draw.text((x, y - SHADOW_WIDTH), text, font=font, fill=SHADOW_COLOR)
-draw.text((x, y + SHADOW_WIDTH), text, font=font, fill=SHADOW_COLOR)
+    # Adding text in white.
+    draw.text((x, y), text, fill=TEXT_COLOR, font=font)
 
-# Adding text in white.
-draw.text((x, y), text, fill=TEXT_COLOR, font=font)
-
-# img.save("key.png")
-img.save("./test-data/image/key.png")
+    # img.save("key.png")
+    img.save(output_path)

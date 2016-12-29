@@ -1,1 +1,1 @@
-__all__ = ["opencv_video_generator"]
+__all__ = ["opencv_silent_video_generator"]
