@@ -7,7 +7,8 @@ Please use lasvegas_tool.sh to run the pipeline in debug mode.
 2. For each KV-pair in the dump,
     - generate image files
     - generate audio files
-    - generate video file using images
+    - generate a silent video file using images
+    - mux the silent video and the audio files to generate the final output.
 
 '''
 from imagegenerator import *
@@ -35,9 +36,10 @@ pil_value_image_generator.GenerateImage(INPUT_VALUE, VALUE_IMAGE_PATH)
 gtts_audio_generator.GenerateAudio(
     INPUT_KEY, INPUT_VALUE, KEY_AUDIO_PATH, VALUE_AUDIO_PATH)
 
-# Generate video
-opencv_silent_video_generator.GenerateSilentVideo(
-    KEY_IMAGE_PATH, VALUE_IMAGE_PATH, SILENT_VIDEO_PATH)
+# Generate video (Not required)
+# opencv_silent_video_generator.GenerateSilentVideo(
+#     KEY_IMAGE_PATH, VALUE_IMAGE_PATH, SILENT_VIDEO_PATH)
 
 # Mux
-ffmpeg_av_mux.AvMux(VALUE_AUDIO_PATH, SILENT_VIDEO_PATH, FINAL_OUTPUT_PATH)
+ffmpeg_av_mux.AvMux(KEY_IMAGE_PATH, VALUE_IMAGE_PATH,
+                    KEY_AUDIO_PATH, VALUE_AUDIO_PATH, FINAL_OUTPUT_PATH)
