@@ -21,6 +21,7 @@ VALUE_IMAGE_PATH = "./test-data/image/value.png"
 KEY_AUDIO_PATH = "./test-data/audio/key.mp3"
 VALUE_AUDIO_PATH = "./test-data/audio/value.mp3"
 SILENT_VIDEO_PATH = "./test-data/video/silent_video.avi"
+FINAL_OUTPUT_PATH = "./test-data/video/final_output.mkv"
 
 # TODO: read input text from the dump instead
 INPUT_KEY = '''Empressite'''
@@ -35,3 +36,6 @@ gtts_audio_generator.GenerateAudio(INPUT_KEY, INPUT_VALUE, KEY_AUDIO_PATH, VALUE
 
 # Generate video
 opencv_silent_video_generator.GenerateSilentVideo(KEY_IMAGE_PATH, VALUE_IMAGE_PATH, SILENT_VIDEO_PATH)
+
+# Mux
+ffmpeg_av_mux.AvMux(VALUE_AUDIO_PATH, SILENT_VIDEO_PATH, FINAL_OUTPUT_PATH)
