@@ -22,7 +22,7 @@ VALUE_IMAGE_PATH = "./test-data/image/value.png"
 KEY_AUDIO_PATH = "./test-data/audio/key.mp3"
 VALUE_AUDIO_PATH = "./test-data/audio/value.mp3"
 SILENT_VIDEO_PATH = "./test-data/video/silent_video.avi"
-FINAL_OUTPUT_PATH = "./test-data/video/final_output.mkv"
+FINAL_OUTPUT_PATH = "./test-data/video/final_output.mp4"
 
 # TODO: read input text from the dump instead
 INPUT_KEY = '''Empressite'''
