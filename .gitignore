@@ -3,7 +3,10 @@
 
 # Python virtual environment
 /venv/
+
+# Testdata
 /test-data/
+/src/utils/bgcolor/output/
 
 # Eclipse and mac
 .DS_Store
