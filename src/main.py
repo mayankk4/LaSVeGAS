@@ -7,10 +7,10 @@ Please use lasvegas_tool.sh to run the pipeline in debug mode.
 2. For each KV-pair in the dump,
     - generate image files
     - generate audio files
-    - generate a silent video file using images
-    - mux the silent video and the audio files to generate the final output.
+    - mux the images and the audio files to generate the final output.
 
 '''
+
 from imagegenerator import *
 from audiogenerator import *
 from videogenerator import *
@@ -22,7 +22,7 @@ VALUE_IMAGE_PATH = "./test-data/image/value.png"
 KEY_AUDIO_PATH = "./test-data/audio/key.mp3"
 VALUE_AUDIO_PATH = "./test-data/audio/value.mp3"
 SILENT_VIDEO_PATH = "./test-data/video/silent_video.avi"
-FINAL_OUTPUT_PATH = "./test-data/video/final_output.mkv"
+FINAL_OUTPUT_PATH = "./test-data/video/final_output.mp4"
 
 # TODO: read input text from the dump instead
 INPUT_KEY = '''Empressite'''
