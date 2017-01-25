@@ -24,11 +24,7 @@ from PIL import ImageDraw
 
 import textwrap
 
-MAX_W, MAX_H = 2880, 1800
-
-# TODO: Create a common util for key-image and value-image generators.
-# TODO: Choose randomly from an array of chosen colours.
-BG_COLOR = (255, 147, 41)
+MAX_W, MAX_H = 1920, 1080
 
 SHADOW_COLOR = "black"
 TEXT_COLOR = "white"
@@ -38,10 +34,10 @@ FONT_SIZE = 250
 SHADOW_WIDTH = 2
 
 
-def GenerateImage(text, output_path):
+def GenerateImage(text, output_path, bgcolor):
     print "Generating Image for the key: " + text
     # Create an image with a bg colour.
-    img = Image.new("RGBA", (MAX_W, MAX_H), BG_COLOR)
+    img = Image.new("RGBA", (MAX_W, MAX_H), bgcolor)
     draw = ImageDraw.Draw(img)
 
     # TODO: Store the font file locally

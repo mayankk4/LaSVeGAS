@@ -21,19 +21,17 @@ from PIL import ImageDraw
 
 import textwrap
 
-MAX_W, MAX_H = 2880, 1800
-
-BG_COLOR = (255, 147, 41)
+MAX_W, MAX_H = 1920, 1080
 
 # SHADOW_COLOR = "black"
 TEXT_COLOR = "black"
 
 
-def GenerateImage(text, output_path):
+def GenerateImage(text, output_path, bgcolor):
     print "Generating Image for the value: " + text
 
     # Create an image with a bg colour.
-    img = Image.new("RGBA", (MAX_W, MAX_H), BG_COLOR)
+    img = Image.new("RGBA", (MAX_W, MAX_H), bgcolor)
     draw = ImageDraw.Draw(img)
 
     # Now add text to the image.
