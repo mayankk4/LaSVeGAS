@@ -7,7 +7,6 @@ The image titles contain the rgb colour code so that we can quickly add or
 remove a color if needed.
 
 Usage:
-Create folder output/
 python bgcolor_tester.py
 
 
@@ -19,6 +18,7 @@ from PIL import Image
 from PIL import ImageDraw
 
 import textwrap
+import subprocess
 
 FONT_SIZE = 250
 SHADOW_WIDTH = 2
@@ -94,6 +94,10 @@ def GenerateValueImage(text, output_path, BG_COLOR):
 
 
 print "Starting..."
+
+subprocess.call("rm -r ./output/", shell=True)
+subprocess.call("mkdir ./output/", shell=True)
+
 print "Reading the color code text file."
 lines = []
 with open("./modern_colors.txt") as f:
@@ -106,6 +110,7 @@ i = 0
 for line in lines:
     i = i + 1
     if (not line.startswith('rgb')):
+        print "continue " + str(i)
         continue
 
     # Read the RGB color code as a tuple
