@@ -1,1 +1,1 @@
-__all__ = ["youtube_video_uploader"]
+__all__ = ["youtube_video_uploader", "youtube_utils"]
