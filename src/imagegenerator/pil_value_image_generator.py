@@ -28,6 +28,7 @@ TEXT_COLOR = "black"
 FONT_SIZE = 80
 CHARACTERS_PER_LINE = 40
 
+
 def GenerateImage(text, output_path, bgcolor):
     print "Generating Image for the value: " + text
 

@@ -114,7 +114,8 @@ for line in lines:
         continue
 
     # Read the RGB color code as a tuple
-    current_color = tuple(map(int, line.split('(')[1].split(')')[0].split(',')))
+    current_color = tuple(
+        map(int, line.split('(')[1].split(')')[0].split(',')))
 
     key_output_path = "./output/" + str(i) + "_key.png"
     value_output_path = "./output/" + str(i) + "_value.png"

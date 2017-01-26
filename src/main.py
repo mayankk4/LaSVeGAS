@@ -23,6 +23,7 @@ from videogenerator import *
 # List of colours which is read into memory from a text file.
 colors = []
 
+
 def validate_debug_args(args):
     if not args.path_to_bgcolors_file:
         exit("Please specify a valid file using --path_to_bgcolors_file.")
@@ -44,6 +45,7 @@ def validate_debug_args(args):
     if not args.path_to_output:
         exit("8: Please check args.")
 
+
 def read_bgcolors(args):
     with open(args.path_to_bgcolors_file) as f:
         for line in f:
@@ -59,8 +61,10 @@ def run_pipeline_debug(args):
     print "Read " + str(len(colors)) + " colors for background."
 
     # Choose bgcolour
-    key_bg_color = tuple(map(int, colors[randint(0, len(colors) - 1)].split(',')))
-    value_bg_color = tuple(map(int, colors[randint(0, len(colors) - 1)].split(',')))
+    key_bg_color = tuple(
+        map(int, colors[randint(0, len(colors) - 1)].split(',')))
+    value_bg_color = tuple(
+        map(int, colors[randint(0, len(colors) - 1)].split(',')))
 
     # Generate images
     pil_key_image_generator.GenerateImage(args.debug_key,
