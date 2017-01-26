@@ -16,38 +16,40 @@ Install python and pip (We use Python 2.7)
 Create a virtual environment within lasvegas/  
 http://docs.python-guide.org/en/latest/dev/virtualenvs/#virtualenvironments-ref
 
-Install lint  
+Activate the virtual environment
 
     source venv/bin/activate
+
+## Setup for development
+Install lint  
+
     pip install pep8
     pip install autopep8
 
-## Setup for video generator
-install pil  
-
-    sudo pip install pillow
-
-install cv2, numpy  
-
-## Setup for Audio generator
-
-    pip install pyttsx
-    pip install pyobjc
-    pip install gTTS
-
-## Setup for Uploader
-
-    git update-index --assume-unchanged path/to/client_secrets.json
-
-## Setup for video muxing
-For this, we need to install ffmpeg since we simply invoke it using a subprocess.  
-
-    brew install ffmpeg --with-fdk-aac --with-ffplay --with-freetype --with-libass --with-libquvi --with-libvorbis --with-libvpx --with-opus --with-x265 --with-frei0r  --with-libvo-aacenc --with-opencore-amr --with-openjpeg --with-rtmpdump --with-schroedinger --with-speex --with-theora --with-tools --with-openssl --with-rtmpdump  --with-faac --with-lame --with-x264 --with-xvid
-
-## Submitting  
 Please autolint the files before checking in.
 
     autopep8 ./src/ --recursive --in-place --pep8-passes 2000 --verbose
+
+Do not check in the client_secrets
+
+    git update-index --assume-unchanged path/to/client_secrets.json
+
+## Setup for video Running the pipeline
+
+Setup for Image generator
+    pip install pillow
+    ~~pip install cv2~~
+    pip install numpy  
+
+Setup for Audio generator
+
+    ~~pip install pyttsx~~
+    ~~pip install pyobjc~~
+    pip install gTTS
+
+Setup for video muxing - For this, we need to install ffmpeg since we simply invoke it using a subprocess.  
+
+    brew install ffmpeg --with-fdk-aac --with-ffplay --with-freetype --with-libass --with-libquvi --with-libvorbis --with-libvpx --with-opus --with-x265 --with-frei0r  --with-libvo-aacenc --with-opencore-amr --with-openjpeg --with-rtmpdump --with-schroedinger --with-speex --with-theora --with-tools --with-openssl --with-rtmpdump  --with-faac --with-lame --with-x264 --with-xvid
 
 
 ## Running the pipeline for a single KV pair.
