@@ -11,7 +11,7 @@ https://pillow.readthedocs.io/en/3.4.x/reference/ImageFont.html
 '''
 
 # TODO: Add support for splitting values over multiple images. Otherwise
-#      we need to reject images larger than a given size.
+#      we need to add a character limit for the value.
 
 
 import PIL
@@ -50,16 +50,9 @@ def GenerateImage(text, output_path, bgcolor):
         x = (MAX_W - w) / 2
         y = current_h
 
-        # Add shadow (Doesn't look good with smaller fonts.)
-        # draw.text((x-2, y), line, font=font, fill=SHADOW_COLOR)
-        # draw.text((x+2, y), line, font=font, fill=SHADOW_COLOR)
-        # draw.text((x, y-2), line, font=font, fill=SHADOW_COLOR)
-        # draw.text((x, y+2), line, font=font, fill=SHADOW_COLOR)
-
         # Add test
         draw.text((x, y), line, fill=TEXT_COLOR, font=font)
 
         current_h += h + pad
 
     img.save(output_path)
-    # img.save("value.png")

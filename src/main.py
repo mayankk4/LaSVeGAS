@@ -16,6 +16,8 @@ from audiogenerator import *
 from videogenerator import *
 
 from random import randint
+from optparse import OptionParser
+
 
 # TODO: Pass these in as flags.
 PATH_TO_DUMP_INPUT = "./test-data/input/input.txt"
@@ -23,7 +25,6 @@ KEY_IMAGE_PATH = "./test-data/image/key.png"
 VALUE_IMAGE_PATH = "./test-data/image/value.png"
 KEY_AUDIO_PATH = "./test-data/audio/key.mp3"
 VALUE_AUDIO_PATH = "./test-data/audio/value.mp3"
-# SILENT_VIDEO_PATH = "./test-data/video/silent_video.avi"
 FINAL_OUTPUT_PATH = "./test-data/video/final_output.mp4"
 
 BG_COLORS_FILE_PATH = "./src/utils/bgcolor/modern_colors.txt"
@@ -35,7 +36,6 @@ with open(BG_COLORS_FILE_PATH) as f:
     for line in f:
         if (line.startswith('rgb')):
             lines.append(line.split('(')[1].split(')')[0])
-
 
 
 # TODO: read input text from the dump instead
@@ -55,10 +55,6 @@ pil_value_image_generator.GenerateImage(INPUT_VALUE, VALUE_IMAGE_PATH, value_bg_
 # Generate audio
 gtts_audio_generator.GenerateAudio(
     INPUT_KEY, INPUT_VALUE, KEY_AUDIO_PATH, VALUE_AUDIO_PATH)
-
-# Generate video (Not required)
-# opencv_silent_video_generator.GenerateSilentVideo(
-#     KEY_IMAGE_PATH, VALUE_IMAGE_PATH, SILENT_VIDEO_PATH)
 
 # Mux
 ffmpeg_av_mux.AvMux(KEY_IMAGE_PATH, VALUE_IMAGE_PATH,

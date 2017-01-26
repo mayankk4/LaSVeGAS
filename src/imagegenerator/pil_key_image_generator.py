@@ -13,8 +13,6 @@ Consider using jpg to reduce the size of the outputs if needed.
 
 '''
 
-# TODO: Take a proper KV pair as input and generate all the necessary images
-# TODO: Add flags support.
 # TODO: Give a slight gradiant in the background image.
 
 import PIL
@@ -43,9 +41,6 @@ def GenerateImage(text, output_path, bgcolor):
     # TODO: Store the font file locally
     font = ImageFont.truetype("Georgia.ttf", FONT_SIZE)
 
-    # A sample text addition
-    # .text((10,10), "Empressite", fill=None, font=font, anchor=None, spacing=0, align="center")
-
     # Get coordinates for drawing text
     w, h = draw.textsize(text, font=font)
     x = (MAX_W - w) / 2
@@ -61,5 +56,4 @@ def GenerateImage(text, output_path, bgcolor):
     # Adding text in white.
     draw.text((x, y), text, fill=TEXT_COLOR, font=font)
 
-    # img.save("key.png")
     img.save(output_path)
