@@ -25,14 +25,14 @@ def AvMux(key_image_path, value_image_path, key_audio_path, value_audio_path, ou
     print "Muxing the audio with the silent video."
 
     cmd0 = "mkdir tmp"
-    cmd1 = "ffmpeg  -loop 1 -i " + key_image_path + " -i " + \
+    cmd1 = "ffmpeg  -y -loop 1 -i " + key_image_path + " -i " + \
         key_audio_path + " -c:v libx264 -c:a aac -strict experimental -b:a 348k -shortest tmp/key.mp4"
-    cmd2 = "ffmpeg  -loop 1 -i " + value_image_path + " -i " + \
+    cmd2 = "ffmpeg  -y -loop 1 -i " + value_image_path + " -i " + \
         value_audio_path + " -c:v libx264 -c:a aac -strict experimental -b:a 348k -shortest tmp/value.mp4"
     cmd3 = "rm tmp/input_list.txt"
     cmd4 = "printf 'file \'key.mp4\'\nfile \'value.mp4\'\n' > tmp/input_list.txt"
-    cmd5 = "ffmpeg -f concat -i tmp/input_list.txt -c copy tmp/tmp.mp4"
-    cmd6 = "ffmpeg -i tmp/tmp.mp4 -codec:v libx264 -crf 21 -bf 2 -flags +cgop -pix_fmt yuv420p -codec:a aac "+ \
+    cmd5 = "ffmpeg -y -f concat -i tmp/input_list.txt -c copy tmp/tmp.mp4"
+    cmd6 = "ffmpeg -y -i tmp/tmp.mp4 -codec:v libx264 -crf 21 -bf 2 -flags +cgop -pix_fmt yuv420p -codec:a aac "+ \
         "-strict -2 -b:a 384k -r:a 48000 -movflags faststart " + output_path
     cmd7 = "rm -rf tmp"
 
