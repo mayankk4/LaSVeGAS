@@ -37,6 +37,7 @@ Do not check in the client_secrets
 ## Setup for video Running the pipeline
 
 Setup for Image generator
+
     pip install pillow
     ~~pip install cv2~~
     pip install numpy  
