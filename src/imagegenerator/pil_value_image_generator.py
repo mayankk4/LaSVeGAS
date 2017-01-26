@@ -22,10 +22,11 @@ from PIL import ImageDraw
 import textwrap
 
 MAX_W, MAX_H = 1920, 1080
-
-# SHADOW_COLOR = "black"
 TEXT_COLOR = "black"
 
+# TODO: Decide fontsize based on the number of characters.
+FONT_SIZE = 80
+CHARACTERS_PER_LINE = 40
 
 def GenerateImage(text, output_path, bgcolor):
     print "Generating Image for the value: " + text
@@ -36,9 +37,9 @@ def GenerateImage(text, output_path, bgcolor):
 
     # Now add text to the image.
     # Convert to paragraph.
-    para = textwrap.wrap(text, width=40)  # width = number of characters.
+    para = textwrap.wrap(text, width=CHARACTERS_PER_LINE)
 
-    font = ImageFont.truetype("Georgia.ttf", 100)  # fontsize
+    font = ImageFont.truetype("Georgia.ttf", FONT_SIZE)  # fontsize
 
     # Determining the height at which we want to start the text.
     w_first, h_first = draw.textsize(para[0], font=font)
