@@ -11,7 +11,7 @@ https://pillow.readthedocs.io/en/3.4.x/reference/ImageFont.html
 '''
 
 # TODO: Add support for splitting values over multiple images. Otherwise
-#      we need to reject images larger than a given size.
+#      we need to add a character limit for the value.
 
 
 import PIL
@@ -21,26 +21,26 @@ from PIL import ImageDraw
 
 import textwrap
 
-MAX_W, MAX_H = 2880, 1800
-
-BG_COLOR = (255, 147, 41)
-
-# SHADOW_COLOR = "black"
+MAX_W, MAX_H = 1920, 1080
 TEXT_COLOR = "black"
 
+# TODO: Decide fontsize based on the number of characters.
+FONT_SIZE = 80
+CHARACTERS_PER_LINE = 40
 
-def GenerateImage(text, output_path):
+
+def GenerateImage(text, output_path, bgcolor):
     print "Generating Image for the value: " + text
 
     # Create an image with a bg colour.
-    img = Image.new("RGBA", (MAX_W, MAX_H), BG_COLOR)
+    img = Image.new("RGBA", (MAX_W, MAX_H), bgcolor)
     draw = ImageDraw.Draw(img)
 
     # Now add text to the image.
     # Convert to paragraph.
-    para = textwrap.wrap(text, width=40)  # width = number of characters.
+    para = textwrap.wrap(text, width=CHARACTERS_PER_LINE)
 
-    font = ImageFont.truetype("Georgia.ttf", 100)  # fontsize
+    font = ImageFont.truetype("Georgia.ttf", FONT_SIZE)  # fontsize
 
     # Determining the height at which we want to start the text.
     w_first, h_first = draw.textsize(para[0], font=font)
@@ -52,16 +52,9 @@ def GenerateImage(text, output_path):
         x = (MAX_W - w) / 2
         y = current_h
 
-        # Add shadow (Doesn't look good with smaller fonts.)
-        # draw.text((x-2, y), line, font=font, fill=SHADOW_COLOR)
-        # draw.text((x+2, y), line, font=font, fill=SHADOW_COLOR)
-        # draw.text((x, y-2), line, font=font, fill=SHADOW_COLOR)
-        # draw.text((x, y+2), line, font=font, fill=SHADOW_COLOR)
-
         # Add test
         draw.text((x, y), line, fill=TEXT_COLOR, font=font)
 
         current_h += h + pad
 
     img.save(output_path)
-    # img.save("value.png")

@@ -10,49 +10,114 @@ Please use lasvegas_tool.sh to run the pipeline in debug mode.
     - mux the images and the audio files to generate the final output.
 
 '''
+import os
 
+from random import randint
+from oauth2client.tools import argparser
+
+# local libraries
 from imagegenerator import *
 from audiogenerator import *
 from videogenerator import *
 from videouploader import *
 
-# TODO: Pass these in as flags.
-PATH_TO_DUMP_INPUT = "./test-data/input/input.txt"
-KEY_IMAGE_PATH = "./test-data/image/key.png"
-VALUE_IMAGE_PATH = "./test-data/image/value.png"
-KEY_AUDIO_PATH = "./test-data/audio/key.mp3"
-VALUE_AUDIO_PATH = "./test-data/audio/value.mp3"
-SILENT_VIDEO_PATH = "./test-data/video/silent_video.avi"
-FINAL_OUTPUT_PATH = "./test-data/video/final_output.mp4"
 
-# TODO: read input text from the dump instead
-INPUT_KEY = '''Empressite'''
-INPUT_VALUE = '''Empressite is a mineral form of silver telluride, AgTe. It is a rare, grey, orthorhombic mineral with which can form compact masses, rarely as bipyrimidal crystals.'''
+# List of colours which is read into memory from a text file.
+colors = []
 
-#TODO SEO
-VIDEO_TITLE = INPUT_KEY
-VIDEO_DESCRIPTION = INPUT_VALUE
-VIDEO_CATEGORY = '''22'''
-VIDEO_TAGS = INPUT_KEY + ', wikipedia, meaning'
-VIDEO_PRIVACY_STATUSES = ("public", "private", "unlisted")
 
-for num in range(1,2):
+def validate_debug_args(args):
+    if not args.path_to_bgcolors_file:
+        exit("Please specify a valid file using --path_to_bgcolors_file.")
+    if not os.path.exists(args.path_to_bgcolors_file):
+        exit("Please specify a valid file using --path_to_bgcolors_file.")
 
-	# Generate images
-	pil_key_image_generator.GenerateImage(INPUT_KEY, KEY_IMAGE_PATH)
-	pil_value_image_generator.GenerateImage(INPUT_VALUE, VALUE_IMAGE_PATH)
+    if not args.debug_key:
+        exit("1: Please check args.")
+    if not args.debug_value:
+        exit("2: Please check args.")
+    if not args.path_to_key_image:
+        exit("4: Please check args.")
+    if not args.path_to_value_image:
+        exit("5: Please check args.")
+    if not args.path_to_key_audio:
+        exit("6: Please check args.")
+    if not args.path_to_value_audio:
+        exit("7: Please check args.")
+    if not args.path_to_output:
+        exit("8: Please check args.")
+    if not args.video_privacy_status:
+    	exit("8: Please check video_privacy_status: {'public', 'private', 'unlisted'} ")
 
-	# Generate audio
-	gtts_audio_generator.GenerateAudio(
-	    INPUT_KEY, INPUT_VALUE, KEY_AUDIO_PATH, VALUE_AUDIO_PATH)
 
-	# Generate video (Not required)
-	# opencv_silent_video_generator.GenerateSilentVideo(
-	#     KEY_IMAGE_PATH, VALUE_IMAGE_PATH, SILENT_VIDEO_PATH)
 
-	# Mux
-	ffmpeg_av_mux.AvMux(KEY_IMAGE_PATH, VALUE_IMAGE_PATH,
-	                    KEY_AUDIO_PATH, VALUE_AUDIO_PATH, FINAL_OUTPUT_PATH)
+def read_bgcolors(args):
+    with open(args.path_to_bgcolors_file) as f:
+        for line in f:
+            if (line.startswith('rgb')):
+                colors.append(line.split('(')[1].split(')')[0])
 
-	#Upload video
-	youtube_utils.uploadVideo(VIDEO_TITLE, VIDEO_DESCRIPTION, VIDEO_CATEGORY, VIDEO_TAGS, FINAL_OUTPUT_PATH, VIDEO_PRIVACY_STATUSES[0])
+
+def run_pipeline_debug(args):
+    validate_debug_args(args)
+
+    # Read the colors file into memory once
+    read_bgcolors(args)
+    print "Read " + str(len(colors)) + " colors for background."
+
+    # Choose bgcolour
+    key_bg_color = tuple(
+        map(int, colors[randint(0, len(colors) - 1)].split(',')))
+    value_bg_color = tuple(
+        map(int, colors[randint(0, len(colors) - 1)].split(',')))
+
+    # Generate images
+    pil_key_image_generator.GenerateImage(args.debug_key,
+                                          args.path_to_key_image,
+                                          key_bg_color)
+    pil_value_image_generator.GenerateImage(args.debug_value,
+                                            args.path_to_value_image,
+                                            value_bg_color)
+
+    # Generate audio
+    gtts_audio_generator.GenerateAudio(args.debug_key,
+                                       args.debug_value,
+                                       args.path_to_key_audio,
+                                       args.path_to_value_audio)
+
+    # Mux
+    ffmpeg_av_mux.AvMux(args.path_to_key_image, args.path_to_value_image,
+                        args.path_to_key_audio, args.path_to_value_audio,
+                        args.path_to_output)
+
+    # Upload
+    youtube_utils.UploadVideo(args.debug_key, args.debug_value, args.path_to_output, args.video_privacy_status)
+
+
+    print "================================================================"
+    print "Successfully completed."
+    print "================================================================"
+
+if __name__ == '__main__':
+    # Define all Flags here
+    argparser.add_argument("--debug", required=True, default=True)
+
+    argparser.add_argument("--path_to_bgcolors_file")
+
+    # Debugging related flags
+    argparser.add_argument("--debug_key")
+    argparser.add_argument("--debug_value")
+    argparser.add_argument("--path_to_key_image")
+    argparser.add_argument("--path_to_value_image")
+    argparser.add_argument("--path_to_key_audio")
+    argparser.add_argument("--path_to_value_audio")
+    argparser.add_argument("--path_to_output")
+    argparser.add_argument("--video_privacy_status")
+
+
+    args = argparser.parse_args()
+
+    if (args.debug):
+        run_pipeline_debug(args)
+
+    # Prod run.

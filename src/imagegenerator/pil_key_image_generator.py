@@ -13,8 +13,6 @@ Consider using jpg to reduce the size of the outputs if needed.
 
 '''
 
-# TODO: Take a proper KV pair as input and generate all the necessary images
-# TODO: Add flags support.
 # TODO: Give a slight gradiant in the background image.
 
 import PIL
@@ -24,11 +22,7 @@ from PIL import ImageDraw
 
 import textwrap
 
-MAX_W, MAX_H = 2880, 1800
-
-# TODO: Create a common util for key-image and value-image generators.
-# TODO: Choose randomly from an array of chosen colours.
-BG_COLOR = (255, 147, 41)
+MAX_W, MAX_H = 1920, 1080
 
 SHADOW_COLOR = "black"
 TEXT_COLOR = "white"
@@ -38,17 +32,14 @@ FONT_SIZE = 250
 SHADOW_WIDTH = 2
 
 
-def GenerateImage(text, output_path):
+def GenerateImage(text, output_path, bgcolor):
     print "Generating Image for the key: " + text
     # Create an image with a bg colour.
-    img = Image.new("RGBA", (MAX_W, MAX_H), BG_COLOR)
+    img = Image.new("RGBA", (MAX_W, MAX_H), bgcolor)
     draw = ImageDraw.Draw(img)
 
     # TODO: Store the font file locally
     font = ImageFont.truetype("Georgia.ttf", FONT_SIZE)
-
-    # A sample text addition
-    # .text((10,10), "Empressite", fill=None, font=font, anchor=None, spacing=0, align="center")
 
     # Get coordinates for drawing text
     w, h = draw.textsize(text, font=font)
@@ -65,5 +56,4 @@ def GenerateImage(text, output_path):
     # Adding text in white.
     draw.text((x, y), text, fill=TEXT_COLOR, font=font)
 
-    # img.save("key.png")
     img.save(output_path)
