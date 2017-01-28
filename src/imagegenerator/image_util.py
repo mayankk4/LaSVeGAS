@@ -28,20 +28,12 @@ def GenerateRandomKeyImageBackground(MAX_W, MAX_H, bgcolor):
 
 # Create an image with a bg colour and gradient.
 # (255,255,255) is white
-
-
 def GenerateRandomValueImageBackground(MAX_W, MAX_H, bgcolor):
-    img = randint(0, 3)
+    img = randint(0, 1)
     if (img == 0):
         img = GenerateCircularGradientImage(
-            (MAX_W, MAX_H), bgcolor, (255, 255, 255))
-    if (img == 1):
-        img = GenerateCircularGradientImage(
             (MAX_W, MAX_H), (255, 255, 255), bgcolor)
-    if (img == 2):
-        img = GenerateRectangularGradientImage(
-            (MAX_W, MAX_H), bgcolor, (255, 255, 255))
-    if (img == 3):
+    if (img == 1):
         img = GenerateRectangularGradientImage(
             (MAX_W, MAX_H), (255, 255, 255), bgcolor)
 
