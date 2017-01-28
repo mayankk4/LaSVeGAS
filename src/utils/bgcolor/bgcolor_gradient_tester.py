@@ -1,24 +1,22 @@
 ''' Util which helps us decide the background colours for our videos.
-
-- Take a list of input RGB color codes through a text file.
-- Generates two images per colour - one with white text and one with dark text.
-
-The image titles contain the rgb colour code so that we can quickly add or
-remove a color if needed.
+This script takes a lot longer to run than bgcolor_tester.py since it also
+adds gradient to each image.
 
 Usage:
-python bgcolor_tester.py
-
+python bgcolor_gradient_tester.py
 
 '''
 
 import PIL
 import textwrap
 import subprocess
+import math
 
 from PIL import ImageFont
 from PIL import Image
 from PIL import ImageDraw
+from random import randint
+
 
 FONT_SIZE = 250
 SHADOW_WIDTH = 2
@@ -30,10 +28,63 @@ INPUT_VALUE = '''Empressite is a mineral form of silver telluride, AgTe. It is
  rare, grey, orthorhombic mineral with which can form compact masses, rarely
  as bipyrimidal crystals.'''
 
+
+def GenerateCircularGradientImage(imgsize, innerColor, outerColor):
+    image = Image.new('RGB', imgsize)
+    for y in range(imgsize[1]):
+        for x in range(imgsize[0]):
+
+            #Find the distance to the center
+            distanceToCenter = math.sqrt((x - imgsize[0]/2) ** 2 + (y - imgsize[1]/2) ** 2)
+
+            #Make it on a scale from 0 to 1
+            distanceToCenter = float(distanceToCenter) / (math.sqrt(2) * imgsize[0]/2)
+
+            #Calculate r, g, and b values
+            r = outerColor[0] * distanceToCenter + innerColor[0] * (1 - distanceToCenter)
+            g = outerColor[1] * distanceToCenter + innerColor[1] * (1 - distanceToCenter)
+            b = outerColor[2] * distanceToCenter + innerColor[2] * (1 - distanceToCenter)
+
+            #Place the pixel
+            image.putpixel((x, y), (int(r), int(g), int(b)))
+
+    return image
+
+def GenerateRectangularGradientImage(imgsize, innerColor, outerColor):
+    image = Image.new('RGB', imgsize)
+    for y in range(imgsize[1]):
+        for x in range(imgsize[0]):
+            #Find the distance to the closest edge
+            distanceToEdge = min(abs(x - imgsize[0]), x, abs(y - imgsize[1]), y)
+
+            #Make it on a scale from 0 to 1
+            distanceToEdge = float(distanceToEdge) / (imgsize[0]/2)
+
+            #Calculate r, g, and b values
+            r = innerColor[0] * distanceToEdge + outerColor[0] * (1 - distanceToEdge)
+            g = innerColor[1] * distanceToEdge + outerColor[1] * (1 - distanceToEdge)
+            b = innerColor[2] * distanceToEdge + outerColor[2] * (1 - distanceToEdge)
+
+            #Place the pixel
+            image.putpixel((x, y), (int(r), int(g), int(b)))
+
+    return image
+
+
 def GenerateKeyImage(text, output_path, bgcolor):
     TEXT_COLOR = "white"
 
-    img = Image.new('RGB', imgsize, bgcolor)
+    # Create an image with a bg colour and gradient.
+    img = randint(0,3)
+    if (img == 0):
+        img = GenerateCircularGradientImage((MAX_W, MAX_H), bgcolor, (0,0,0))
+    if (img == 1):
+        img = GenerateCircularGradientImage((MAX_W, MAX_H), (0,0,0), bgcolor)
+    if (img == 2):
+        img = GenerateRectangularGradientImage((MAX_W, MAX_H), bgcolor, (0,0,0))
+    if (img == 3):
+        img = GenerateRectangularGradientImage((MAX_W, MAX_H), (0,0,0), bgcolor)
+
     draw = ImageDraw.Draw(img)
 
     # TODO: Store the font file locally
@@ -60,7 +111,17 @@ def GenerateKeyImage(text, output_path, bgcolor):
 def GenerateValueImage(text, output_path, bgcolor):
     TEXT_COLOR = "black"
 
-    img = Image.new('RGB', imgsize, bgcolor)
+    # Create an image with a bg colour and gradient.
+    img = randint(0,3)
+    if (img == 0):
+        img = GenerateCircularGradientImage((MAX_W, MAX_H), bgcolor, (255,255,255))
+    if (img == 1):
+        img = GenerateCircularGradientImage((MAX_W, MAX_H), (255,255,255), bgcolor)
+    if (img == 2):
+        img = GenerateRectangularGradientImage((MAX_W, MAX_H), bgcolor, (255,255,255))
+    if (img == 3):
+        img = GenerateRectangularGradientImage((MAX_W, MAX_H), (255,255,255), bgcolor)
+
     draw = ImageDraw.Draw(img)
 
     # Now add text to the image.
