@@ -30,6 +30,7 @@ INPUT_VALUE = '''Empressite is a mineral form of silver telluride, AgTe. It is
  rare, grey, orthorhombic mineral with which can form compact masses, rarely
  as bipyrimidal crystals.'''
 
+
 def GenerateKeyImage(text, output_path, bgcolor):
     TEXT_COLOR = "white"
 
