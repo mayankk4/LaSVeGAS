@@ -19,7 +19,7 @@ echo "Activating virtual environment."
 source venv/bin/activate
 
 python ./src/main.py \
-  --debug=True \
+  --debug=False \
   --debug_key="Empressite" \
   --debug_value="Empressite is a mineral form of silver telluride, AgTe. It is a rare, grey, orthorhombic mineral with which can form compact masses, rarely as bipyrimidal crystals." \
   --path_to_bgcolors_file="./src/utils/bgcolor/modern_colors.txt" \
