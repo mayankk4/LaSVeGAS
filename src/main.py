@@ -48,7 +48,7 @@ def validate_debug_args(args):
     if not args.path_to_output:
         exit("8: Please check path_to_output.")
     if not args.video_privacy_status:
-    	exit("8: Please check video_privacy_status: {'public', 'private', 'unlisted'} ")
+    	exit("9: Please check video_privacy_status: {'public', 'private', 'unlisted'} ")
 
 
 def validate_prod_args(args):
@@ -69,9 +69,9 @@ def validate_prod_args(args):
     if not args.path_to_output:
     	exit("8: Please check path_to_output.")
     if not args.video_privacy_status:
-    	exit("8: Please check video_privacy_status: {'public', 'private', 'unlisted'} ")
+    	exit("9: Please check video_privacy_status: {'public', 'private', 'unlisted'} ")
     if not args.path_to_status_file:
-    	exit("9: Please check path_to_status_file.")
+    	exit("10: Please check path_to_status_file.")
 
 
 def read_bgcolors(path_to_bgcolors_file):
@@ -127,11 +127,11 @@ def run_pipeline_debug(args):
 # TODO: try-catch for error free run
 #
 def run_pipeline_prod(args):
-    
+
     #Validate the args
     validate_prod_args(args)
 
-		#Load candidate datasets for upload    
+		#Load candidate datasets for upload
     key_value_pairs = pip_lifecycle.GetAllKeyValues(args.path_to_content)
 
     #For all the key,value in content file
@@ -147,38 +147,38 @@ def run_pipeline_prod(args):
     	# Read the colors file into memory once
     	read_bgcolors(args.path_to_bgcolors_file)
     	print "Read " + str(len(colors)) + " colors for background."
-    	
+
 
     	# Choose bgcolour
     	key_bg_color = tuple(
 	        map(int, colors[randint(0, len(colors) - 1)].split(',')))
     	value_bg_color = tuple(
 	        map(int, colors[randint(0, len(colors) - 1)].split(',')))
-    	
+
 
     	# Generate images
     	pil_key_image_generator.GenerateImage(key, args.path_to_key_image,
 	                                          key_bg_color)
-    	
+
     	pil_value_image_generator.GenerateImage(value, args.path_to_value_image,
-	                    
+
 	                                            value_bg_color)
     	# Generate audio
     	gtts_audio_generator.GenerateAudio(key, value,
 	                                       args.path_to_key_audio, args.path_to_value_audio)
-    	
+
     	# Mux
     	ffmpeg_av_mux.AvMux(args.path_to_key_image, args.path_to_value_image,
 	                        args.path_to_key_audio, args.path_to_value_audio,
 	                        args.path_to_output)
-    	
+
     	# Upload
     	youtube_utils.UploadVideo(key, value, args.path_to_output, args.video_privacy_status)
-    	
+
 
     	#Ending the execution with status SUCCESS(3)
     	pip_lifecycle.EndExecution(key, args.path_to_status_file)
-    	
+
     	print "================================================================"
     	print "Run successfully completed for " + key
     	print "================================================================"
@@ -210,4 +210,3 @@ if __name__ == '__main__':
     	run_pipeline_debug(args)
     else:
     	run_pipeline_prod(args)
-
