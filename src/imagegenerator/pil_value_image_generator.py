@@ -15,11 +15,12 @@ https://pillow.readthedocs.io/en/3.4.x/reference/ImageFont.html
 
 
 import PIL
+import textwrap
+
 from PIL import ImageFont
 from PIL import Image
 from PIL import ImageDraw
-
-import textwrap
+from imagegenerator import image_util
 
 MAX_W, MAX_H = 1920, 1080
 TEXT_COLOR = "black"
@@ -32,8 +33,8 @@ CHARACTERS_PER_LINE = 40
 def GenerateImage(text, output_path, bgcolor):
     print "Generating Image for the value: " + text
 
-    # Create an image with a bg colour.
-    img = Image.new("RGBA", (MAX_W, MAX_H), bgcolor)
+    # Create an image with a bg colour and gradient.
+    img = image_util.GenerateRandomValueImageBackground(MAX_W, MAX_H, bgcolor)
     draw = ImageDraw.Draw(img)
 
     # Now add text to the image.

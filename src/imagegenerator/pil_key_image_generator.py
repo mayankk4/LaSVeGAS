@@ -13,14 +13,13 @@ Consider using jpg to reduce the size of the outputs if needed.
 
 '''
 
-# TODO: Give a slight gradiant in the background image.
-
 import PIL
+import textwrap
+
 from PIL import ImageFont
 from PIL import Image
 from PIL import ImageDraw
-
-import textwrap
+from imagegenerator import image_util
 
 MAX_W, MAX_H = 1920, 1080
 
@@ -34,8 +33,8 @@ SHADOW_WIDTH = 2
 
 def GenerateImage(text, output_path, bgcolor):
     print "Generating Image for the key: " + text
-    # Create an image with a bg colour.
-    img = Image.new("RGBA", (MAX_W, MAX_H), bgcolor)
+    # Create an image with a bg colour and gradient.
+    img = image_util.GenerateRandomKeyImageBackground(MAX_W, MAX_H, bgcolor)
     draw = ImageDraw.Draw(img)
 
     # TODO: Store the font file locally
