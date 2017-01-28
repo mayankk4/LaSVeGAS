@@ -17,7 +17,8 @@ file-size <100KB
 from gtts import gTTS
 import os
 
-LANGUAGE = 'en'
+# Can use en-us, en-uk or en-au.
+LANGUAGE = 'en-us'
 
 
 def GenerateAudio(key_text, value_text, key_output_path, value_output_path):
