@@ -7,7 +7,7 @@ import sys
 from datetime import datetime
 from datetime import timedelta
 import urllib2, json
-
+import traceback
 
 
 BLACKLIST_WIKI_ARTICLES_LIST = ['Main_Page', 'Special:Search', '404.php', 'Special:RecentChanges', 'Special:CreateAccount', 'Special:Book','XXX','Special:Watchlist','Special:MobileMenu','Special:CiteThisPage','Wikipedia','Special:ListUsers','Special:BlockList','Portal:Contents','Special:MobileOptions','Wiki','Wikipedia:About','Portal:Featured_content','.xxx','Special:NewPagesFeed','Help:Contents','Wikipedia:General_disclaimer','Category:All_articles_with_unsourced_statements',"Wikipedia:Today's_featured_article/July_3,_2015",'Wikipedia:Selected_anniversaries/July','Special:RecentChangesLinked','Special:Log','Special:GlobalUsage','Special:Export',"Wikipedia:Today's_featured_article/July_23,_2015",'User:GoogleAnalitycsRoman/google-api','Special:LinkSearch']
@@ -131,16 +131,20 @@ def GenerateDetailedTitlesInfo():
 			try:
 				titleDetailedInfo = ExtractDetailedDescriptionByTitle(title, sentence_limit, SEARCH_LIMIT)
 				
-				while not IsDescriptionUnderAllowedCharLimit(titleDetailedInfo):
+				while not IsDescriptionUnderAllowedCharLimit(titleDetailedInfo) and sentence_limit>=1:
 					print "Refetching with sentence_limit: " + str(sentence_limit)
 					sentence_limit = sentence_limit - 1
 					titleDetailedInfo = ExtractDetailedDescriptionByTitle(title, sentence_limit, SEARCH_LIMIT)
 
 				for d in titleDetailedInfo:
-					target.write(str(d['title']) + "\t" + str(d['desc']) + '\n')
-					target.flush()
-			except:
+					if len(d['desc'])<TITLE_DESCRIPTION_MAX_CHAR_LENGTH and len(d['desc'])>0:
+						target.write(str(d['title']) + "\t" + str(d['desc']) + '\n')
+						target.flush()
+					else:
+						print "Skipping title length issue, length: " + str(len(d['desc']))
+			except Exception, err:
 				print "Error in procssing"
+				print(traceback.format_exc())
 			count = count + 1
 
 
