@@ -59,18 +59,16 @@ def run_pipeline(args):
     print "Read " + str(len(colors)) + " colors for background."
 
     # Choose bgcolour
-    key_bg_color = tuple(
-        map(int, colors[randint(0, len(colors) - 1)].split(',')))
-    value_bg_color = tuple(
+    bg_color = tuple(
         map(int, colors[randint(0, len(colors) - 1)].split(',')))
 
     # Generate images
     pil_key_image_generator.GenerateImage(args.debug_key,
                                           args.path_to_key_image,
-                                          key_bg_color)
+                                          bg_color)
     pil_value_image_generator.GenerateImage(args.debug_value,
                                             args.path_to_value_image,
-                                            value_bg_color)
+                                            bg_color)
 
     # Generate audio
     gtts_audio_generator.GenerateAudio(args.debug_key,
@@ -84,9 +82,11 @@ def run_pipeline(args):
                         args.path_to_output)
 
     # Upload
-    if args.upload_to_youtube in ("yes", "true", "t", "1"):
+    if args.upload_to_youtube.lower() in ("yes", "true", "t", "1"):
         youtube_utils.UploadVideo(
             args.debug_key, args.debug_value, args.path_to_output, args.video_privacy_status)
+    else:
+        print "Skipping youtube upload since flag is not enabled."
 
     print "================================================================"
     print "Successfully completed."

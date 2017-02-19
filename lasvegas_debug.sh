@@ -1,7 +1,8 @@
 #!/bin/sh
 
 ########### USAGE #############
-## time sh lasvegas_debug.sh ##
+# time sh lasvegas_debug.sh
+# time sh lasvegas_debug.sh -- --upload_to_youtube=false
 ###############################
 
 # Run this script from ./lasvegas
