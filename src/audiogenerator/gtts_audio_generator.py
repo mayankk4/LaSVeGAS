@@ -11,21 +11,13 @@ time <5s
 file-size <100KB
 
 '''
-# TODO: Pass the language and other configs as flags.
-# TODO: Maybe edit the speed/accent of the audio.
 
 from gtts import gTTS
 import os
 
-# Can use en-us, en-uk or en-au.
-LANGUAGE = 'en-us'
 
-
-def GenerateAudio(key_text, value_text, key_output_path, value_output_path):
+def GenerateAudio(text, output_path, audio_accent):
     print "Generating Audio now."
 
-    ttsKey = gTTS(text=key_text, lang=LANGUAGE)
-    ttsKey.save(key_output_path)
-
-    ttsValue = gTTS(text=value_text, lang=LANGUAGE)
-    ttsValue.save(value_output_path)
+    ttsKey = gTTS(text=text, lang=audio_accent)
+    ttsKey.save(output_path)

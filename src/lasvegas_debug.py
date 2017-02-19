@@ -17,7 +17,6 @@ from videouploader import *
 # List of colours which is read into memory from a text file.
 colors = []
 
-
 def validate_args(args):
     if not args.path_to_bgcolors_file:
         exit("Please specify a valid file using --path_to_bgcolors_file.")
@@ -28,6 +27,8 @@ def validate_args(args):
         exit("1: Please check debug_key.")
     if not args.debug_value:
         exit("2: Please check debug_value.")
+    if not args.audio_accent:
+        exit("3: Please check audio_accent.")
     if not args.path_to_key_image:
         exit("4: Please check path_to_key_image.")
     if not args.path_to_value_image:
@@ -72,9 +73,11 @@ def run_pipeline(args):
 
     # Generate audio
     gtts_audio_generator.GenerateAudio(args.debug_key,
-                                       args.debug_value,
                                        args.path_to_key_audio,
-                                       args.path_to_value_audio)
+                                       args.audio_accent)
+    gtts_audio_generator.GenerateAudio(args.debug_value,
+                                       args.path_to_value_audio,
+                                       args.audio_accent)
 
     # Mux
     ffmpeg_av_mux.AvMux(args.path_to_key_image, args.path_to_value_image,
@@ -98,6 +101,9 @@ if __name__ == '__main__':
     argparser.add_argument("--upload_to_youtube", default=False)
 
     argparser.add_argument("--path_to_bgcolors_file")
+
+    # Can use en-us, en-uk or en-au.
+    argparser.add_argument("--audio_accent")
 
     # Debugging related flags
     argparser.add_argument("--debug_key")

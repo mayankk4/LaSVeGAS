@@ -28,6 +28,7 @@ python ./src/lasvegas_debug.py \
   --path_to_value_audio="./test-data/audio/value.mp3" \
   --path_to_output="./test-data/video/final_output.mp4" \
   --video_privacy_status="public" \
+  --audio_accent="en-us" \
 
 # deactivate virtual env
 echo "Dectivating virtual environment."
