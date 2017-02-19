@@ -28,6 +28,8 @@ def GenerateRandomKeyImageBackground(MAX_W, MAX_H, bgcolor):
 
 # Create an image with a bg colour and gradient.
 # (255,255,255) is white
+
+
 def GenerateRandomValueImageBackground(MAX_W, MAX_H, bgcolor):
     img = randint(0, 1)
     if (img == 0):

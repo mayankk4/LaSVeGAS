@@ -18,6 +18,7 @@ from pipelineexecutor import *
 # List of colours which is read into memory from a text file.
 colors = []
 
+
 def validate_prod_args(args):
     if not args.path_to_bgcolors_file:
         exit("1: Please specify a valid file using --path_to_bgcolors_file.")
