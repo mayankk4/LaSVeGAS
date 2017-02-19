@@ -1,8 +1,10 @@
 #!/bin/sh
 
-########### USAGE #############
-## time sh lasvegas_tool.sh ##
-###############################
+########### USAGE #################
+## time sh lasvegas_wikipedia.sh ##
+###################################
+
+#TODO: FIX this script and the flow.
 
 # Run this script from ./lasvegas
 echo "Running lasvegas_tool."
@@ -13,13 +15,14 @@ rm -R ./test-data/*
 mkdir ./test-data/audio/
 mkdir ./test-data/image/
 mkdir ./test-data/video/
-echo '{}' > ./src/utils/content/video_status
 # Activate virtual env
 echo "Activating virtual environment."
 source venv/bin/activate
 
-python ./src/main.py \
-  --debug=True \
+echo '{}' > ./src/utils/content/video_status
+
+python ./src/channels/wikipedia/main.py \
+  --debug=False \
   --debug_key="Empressite" \
   --debug_value="Empressite is a mineral form of silver telluride, AgTe. It is a rare, grey, orthorhombic mineral with which can form compact masses, rarely as bipyrimidal crystals." \
   --path_to_bgcolors_file="./src/utils/bgcolor/modern_colors.txt" \

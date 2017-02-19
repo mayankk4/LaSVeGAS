@@ -1,13 +1,6 @@
-''' Pipeline runner.
+''' Pipeline runner for Wikipedia channel.
 
-Please use lasvegas_tool.sh to run the pipeline in debug mode.
-
-1. Read the dump.
-
-2. For each KV-pair in the dump,
-    - generate image files
-    - generate audio files
-    - mux the images and the audio files to generate the final output.
+Please use lasvegas_wikipedia.sh to run the pipeline.
 
 '''
 import os
@@ -22,41 +15,15 @@ from videogenerator import *
 from videouploader import *
 from pipelineexecutor import *
 
-
 # List of colours which is read into memory from a text file.
 colors = []
-
-
-def validate_debug_args(args):
-    if not args.path_to_bgcolors_file:
-        exit("Please specify a valid file using --path_to_bgcolors_file.")
-    if not os.path.exists(args.path_to_bgcolors_file):
-        exit("Please specify a valid file using --path_to_bgcolors_file.")
-
-    if not args.debug_key:
-        exit("1: Please check debug_key.")
-    if not args.debug_value:
-        exit("2: Please check debug_value.")
-    if not args.path_to_key_image:
-        exit("4: Please check path_to_key_image.")
-    if not args.path_to_value_image:
-        exit("5: Please check path_to_value_image.")
-    if not args.path_to_key_audio:
-        exit("6: Please check path_to_key_audio.")
-    if not args.path_to_value_audio:
-        exit("7: Please check path_to_value_audio.")
-    if not args.path_to_output:
-        exit("8: Please check path_to_output.")
-    if not args.video_privacy_status:
-        exit(
-            "9: Please check video_privacy_status: {'public', 'private', 'unlisted'} ")
-
 
 def validate_prod_args(args):
     if not args.path_to_bgcolors_file:
         exit("1: Please specify a valid file using --path_to_bgcolors_file.")
     if not os.path.exists(args.path_to_bgcolors_file):
         exit("2: Please specify a valid file using --path_to_bgcolors_file.")
+
     if not args.path_to_content:
         exit("3: Please check path_to_content.")
     if not args.path_to_key_image:
@@ -83,53 +50,10 @@ def read_bgcolors(path_to_bgcolors_file):
                 colors.append(line.split('(')[1].split(')')[0])
 
 
-def run_pipeline_debug(args):
-                # Validate the args
-    validate_debug_args(args)
-
-    # Read the colors file into memory once
-    read_bgcolors(args.path_to_bgcolors_file)
-    print "Read " + str(len(colors)) + " colors for background."
-
-    # Choose bgcolour
-    key_bg_color = tuple(
-        map(int, colors[randint(0, len(colors) - 1)].split(',')))
-    value_bg_color = tuple(
-        map(int, colors[randint(0, len(colors) - 1)].split(',')))
-
-    # Generate images
-    pil_key_image_generator.GenerateImage(args.debug_key,
-                                          args.path_to_key_image,
-                                          key_bg_color)
-    pil_value_image_generator.GenerateImage(args.debug_value,
-                                            args.path_to_value_image,
-                                            value_bg_color)
-
-    # Generate audio
-    gtts_audio_generator.GenerateAudio(args.debug_key,
-                                       args.debug_value,
-                                       args.path_to_key_audio,
-                                       args.path_to_value_audio)
-
-    # Mux
-    ffmpeg_av_mux.AvMux(args.path_to_key_image, args.path_to_value_image,
-                        args.path_to_key_audio, args.path_to_value_audio,
-                        args.path_to_output)
-
-    # Upload
-    youtube_utils.UploadVideo(
-        args.debug_key, args.debug_value, args.path_to_output, args.video_privacy_status)
-
-    print "================================================================"
-    print "Successfully completed."
-    print "================================================================"
-
-
 #
 # TODO: try-catch for error free run
 #
 def run_pipeline_prod(args):
-
     # Validate the args
     validate_prod_args(args)
 
@@ -189,13 +113,9 @@ def run_pipeline_prod(args):
 
 if __name__ == '__main__':
     # Define all Flags here
-    argparser.add_argument("--debug", required=True, default=True)
-
     argparser.add_argument("--path_to_bgcolors_file")
 
     # Debugging related flags
-    argparser.add_argument("--debug_key")
-    argparser.add_argument("--debug_value")
     argparser.add_argument("--path_to_key_image")
     argparser.add_argument("--path_to_value_image")
     argparser.add_argument("--path_to_key_audio")
@@ -206,8 +126,5 @@ if __name__ == '__main__':
     argparser.add_argument("--path_to_status_file")
 
     args = argparser.parse_args()
-    print args.path_to_bgcolors_file
-    if args.debug.lower() in ("yes", "true", "t", "1"):
-        run_pipeline_debug(args)
-    else:
-        run_pipeline_prod(args)
+
+    run_pipeline_prod(args)

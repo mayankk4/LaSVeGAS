@@ -34,7 +34,7 @@ Do not check in the client_secrets
 
     git update-index --assume-unchanged path/to/client_secrets.json
 
-## Setup for video Running the pipeline
+## Running the pipeline
 
 Setup for Image generator
 
@@ -54,6 +54,5 @@ Setup for video muxing - For this, we need to install ffmpeg since we simply inv
 
 
 ## Running the pipeline for a single KV pair.
-This assumes that test-data/ is correctly setup.  
 
-    time sh lasvegas_tool.sh
+    time sh lasvegas_debug.sh
