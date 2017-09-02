@@ -13,14 +13,14 @@ Install python and pip (We use Python 2.7)
     brew install python
     sudo easy_install pip
 
-Create a virtual environment within lasvegas/  
+Create a virtual environment within lasvegas/ (and call it venv)
 http://docs.python-guide.org/en/latest/dev/virtualenvs/#virtualenvironments-ref
 
 Activate the virtual environment
 
     source venv/bin/activate
 
-## Setup for development
+## Setup for development (Inside virtual environment)
 Install lint  
 
     pip install pep8
@@ -50,8 +50,12 @@ Setup for Audio generator
 
 Setup for video muxing - For this, we need to install ffmpeg since we simply invoke it using a subprocess.  
 
-    brew install ffmpeg --with-fdk-aac --with-ffplay --with-freetype --with-libass --with-libquvi --with-libvorbis --with-libvpx --with-opus --with-x265 --with-frei0r  --with-libvo-aacenc --with-opencore-amr --with-openjpeg --with-rtmpdump --with-schroedinger --with-speex --with-theora --with-tools --with-openssl --with-rtmpdump  --with-faac --with-lame --with-x264 --with-xvid
+    sudo brew install ffmpeg --with-fdk-aac --with-ffplay --with-freetype --with-libass --with-libquvi --with-libvorbis --with-libvpx --with-opus --with-x265 --with-frei0r  --with-libvo-aacenc --with-opencore-amr --with-openjpeg --with-rtmpdump --with-schroedinger --with-speex --with-theora --with-tools --with-openssl --with-rtmpdump  --with-faac --with-lame --with-x264 --with-xvid
 
+Other required libs
+
+	pip install --upgrade oauth2client
+	pip install --upgrade google-api-python-client
 
 ## Running the pipeline for a single KV pair.
 

@@ -3,6 +3,7 @@
 
 # Python virtual environment
 /venv/
+/lib/
 
 # Testdata
 /test-data/
