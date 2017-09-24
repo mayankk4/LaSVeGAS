@@ -74,7 +74,7 @@ def run_pipeline(args):
     audio_generator.GenerateAudios(state)
 
     # Mux
-    #ffmpeg_av_mux.AvMux(args.path_to_output)
+    ffmpeg_av_mux.AvMux(state)
 
     # Upload
     # if args.upload_to_youtube:
