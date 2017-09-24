@@ -134,6 +134,7 @@ def IsDescriptionUnderAllowedCharLimit(titleDetailedInfo):
                 return False
     return True
 
+
 '''
 	
 	generate detailed titles info, currently only supports search_limit as 1
@@ -172,6 +173,7 @@ def GenerateDetailedTitlesInfo():
                 print "Error in procssing"
                 print(traceback.format_exc())
             count = count + 1
+
 
  ########## __main() ###########
 TITLE_FILE = str(sys.argv[1])

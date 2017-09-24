@@ -12,7 +12,7 @@ from oauth2client.tools import argparser
 from lasvegas_state import *
 from lasvegas_worker import *
 
-from wikipedia/executor import *
+from wikipedia / executor import *
 
 # List of colours which is read into memory from a text file.
 colors = []
@@ -68,20 +68,19 @@ def run_pipeline_prod(args):
             print message
             continue
 
-
         # Choose bgcolour
         bg_color = tuple(
             map(int, colors[randint(0, len(colors) - 1)].split(',')))
 
-
-        #TODO: UPDATE THIS TO ADD A LIST OF LINES TO VALUE INSTEAD OF A SINGLE VALUE.
-        state = VideoGenerationState(key, [value,], bg_color, args.audio_accent, args.path_to_output, args.upload_to_youtube)
+        # TODO: UPDATE THIS TO ADD A LIST OF LINES TO VALUE INSTEAD OF A SINGLE VALUE.
+        state = VideoGenerationState(
+            key, [value, ], bg_color, args.audio_accent, args.path_to_output, args.upload_to_youtube)
         ProcessState(state)
 
         # Ending the execution with status SUCCESS(3)
         pip_lifecycle.EndExecution(key, args.path_to_status_file)
-        
-        #TODO: RUN CLEANUPS HERE - CLEAR THE DIRECTORY.
+
+        # TODO: RUN CLEANUPS HERE - CLEAR THE DIRECTORY.
 
         print "================================================================"
         print "Run successfully completed for title: " + key

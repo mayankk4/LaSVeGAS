@@ -15,6 +15,7 @@ from lasvegas_worker import *
 # List of colours which is read into memory from a text file.
 colors = []
 
+
 def validate_args(args):
     if not args.path_to_bgcolors_file:
         exit("Please specify a valid file using --path_to_bgcolors_file.")
@@ -63,7 +64,8 @@ def run_pipeline(args):
     print bg_color
 
     # Create a state and process it.
-    state = VideoGenerationState(key, values, bg_color, args.audio_accent, args.path_to_output, args.upload_to_youtube)
+    state = VideoGenerationState(
+        key, values, bg_color, args.audio_accent, args.path_to_output, args.upload_to_youtube)
     ProcessState(state)
 
 

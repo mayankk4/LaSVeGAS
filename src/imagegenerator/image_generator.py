@@ -14,13 +14,15 @@ The images are generated in the following format
 from imagegenerator import pil_key_image_generator
 from imagegenerator import pil_value_image_generator
 
+
 def GenerateImages(state):
     pil_key_image_generator.GenerateImage(state.title,
                                           state.path_to_output + "/key_image.png",
                                           state.bgcolor)
 
-
     for i in range(len(state.values)):
         pil_value_image_generator.GenerateImage(state.values[i],
-                                                state.path_to_output + "/value_image" + str(i) + ".png",
+                                                state.path_to_output +
+                                                "/value_image" +
+                                                str(i) + ".png",
                                                 state.bgcolor)
