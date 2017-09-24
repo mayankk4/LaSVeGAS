@@ -69,23 +69,12 @@ def run_pipeline(args):
 
     # Generate images
     image_generator.GenerateImages(state)
-    # pil_key_image_generator.GenerateImage(args.debug_key,
-    #                                       args.path_to_key_image,
-    #                                       bg_color)
-    # pil_value_image_generator.GenerateImage(args.debug_value,
-    #                                         args.path_to_value_image,
-    #                                         bg_color)
 
     # Generate audio
-    # gtts_audio_generator.GenerateAudio(args.debug_key,
-    #                                    args.path_to_key_audio,
-    #                                    args.audio_accent)
-    # gtts_audio_generator.GenerateAudio(args.debug_value,
-    #                                    args.path_to_value_audio,
-    #                                    args.audio_accent)
+    audio_generator.GenerateAudios(state)
 
     # Mux
-    # ffmpeg_av_mux.AvMux(args.path_to_output)
+    #ffmpeg_av_mux.AvMux(args.path_to_output)
 
     # Upload
     # if args.upload_to_youtube:
