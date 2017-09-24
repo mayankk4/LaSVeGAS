@@ -9,12 +9,8 @@ from random import randint
 from oauth2client.tools import argparser
 
 # local libraries
-from imagegenerator import *
-from audiogenerator import *
-from videogenerator import *
-from videouploader import *
-
 from lasvegas_state import *
+from lasvegas_worker import *
 
 # List of colours which is read into memory from a text file.
 colors = []
@@ -42,6 +38,8 @@ def read_bgcolors(path_to_bgcolors_file):
 def run_pipeline(args):
     # CUSTOMIZE THESE PARAMETERS FOR THE VIDEO
     key = "Empressite"
+
+    # Ensures multi-page video
     values = [
         "Empressite is a mineral form of silver telluride, AgTe.",
         "It is a rare, grey, orthorhombic mineral with which can form compact masses, rarely as bipyrimidal crystals.",
@@ -50,8 +48,7 @@ def run_pipeline(args):
         "Empressite is a mineral form of silver telluride, AgTe.",
         "It is a rare, grey, orthorhombic mineral with which can form compact masses, rarely as bipyrimidal crystals.",
     ]
-    
-    
+
     # Validate the args
     validate_args(args)
 
@@ -65,27 +62,9 @@ def run_pipeline(args):
     print "[DEBUG] Background color: "
     print bg_color
 
-    state = VideoGenerationState(key, values, bg_color, args.audio_accent, args.path_to_output)
-
-    # Generate images
-    image_generator.GenerateImages(state)
-
-    # Generate audio
-    audio_generator.GenerateAudios(state)
-
-    # Mux
-    ffmpeg_av_mux.AvMux(state)
-
-    # Upload
-    # if args.upload_to_youtube:
-    #     youtube_utils.UploadVideo(
-    #         args.debug_key, args.debug_value, args.path_to_output, "public")
-    # else:
-    #     print "Skipping youtube upload since flag is not enabled."
-
-    print "================================================================"
-    print "Successfully completed."
-    print "================================================================"
+    # Create a state and process it.
+    state = VideoGenerationState(key, values, bg_color, args.audio_accent, args.path_to_output, args.upload_to_youtube)
+    ProcessState(state)
 
 
 if __name__ == '__main__':

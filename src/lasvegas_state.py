@@ -5,6 +5,25 @@ class VideoGenerationState:
     page_character_limit = 300
 
 
+    # TODO: Use this function to clear out the text inside brackets.
+    def remove_text_inside_brackets(text):
+        ret = ''
+        skip1c = 0
+        skip2c = 0
+        for i in text:
+            if i == '[':
+                skip1c += 1
+            elif i == '(':
+                skip2c += 1
+            elif i == ']' and skip1c > 0:
+                skip1c -= 1
+            elif i == ')'and skip2c > 0:
+                skip2c -= 1
+            elif skip1c == 0 and skip2c == 0:
+                ret += i
+        return ret
+
+
     def process(self):        
         i = 0
         while (i < len(self.lines)):
@@ -27,12 +46,13 @@ class VideoGenerationState:
         print map(len, self.values)
 
 
-    def __init__(self, title, lines, bgcolor, accent, path_to_output):
+    def __init__(self, title, lines, bgcolor, accent, path_to_output, upload_to_youtube):
         self.title = title
         self.lines = lines
         self.bgcolor = bgcolor
         self.accent = accent
         self.path_to_output = path_to_output
+        self.upload_to_youtube = upload_to_youtube
         
         self.values = []
         

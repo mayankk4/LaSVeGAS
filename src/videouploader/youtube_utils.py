@@ -9,17 +9,25 @@ import subprocess
 #
 #####
 
-
-def constructVidProps(key, value):
-    title = key
-    desc = value
+def constructVidProps(title, lines):
+    title = title
+    desc = '. '.join(lines)
     category = '''22'''
-    tags = key + ', wikipedia, meaning'
+
+    tags = 'wikipedia, meaning, ' + ', '.join(list1)    
+    # Add keywords by breaking the description into words.
+    words_in_lines = map(str.split, lines)
+    for i in range(len(words_in_lines)):
+        tags += ', '.join(words_in_lines[i])
+    
     return (title, desc, category, tags)
 
-
-def UploadVideo(key, value, output_path, privacyStatus='public'):
-    title, desc, category, tags = constructVidProps(key, value)
+def UploadVideo(state):
+    if not state.upload_to_youtube:
+        print "Skipping youtube upload since flag is not enabled."
+        return
+    
+    title, desc, category, tags = constructVidProps(state.title, state.lines)
     upload_cmd = ("python src/videouploader/youtube_video_uploader.py "
                   " --title '" + str(title) + "'"
                   " --description '" + str(desc) + "'"
@@ -28,6 +36,6 @@ def UploadVideo(key, value, output_path, privacyStatus='public'):
                   " --keywords '" +
                   str(tags) + "'"
                   " --file '" +
-                  str(output_path) + "'"
-                  " --privacyStatus '" + str(privacyStatus)) + "'"
+                  str(state.path_to_output) + "/final_output.mp4" + "'"
+                  " --privacyStatus '" + "public") + "'"
     subprocess.call(upload_cmd, shell=True)
