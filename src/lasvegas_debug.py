@@ -14,6 +14,8 @@ from audiogenerator import *
 from videogenerator import *
 from videouploader import *
 
+from lasvegas_state import *
+
 # List of colours which is read into memory from a text file.
 colors = []
 
@@ -23,25 +25,11 @@ def validate_args(args):
     if not os.path.exists(args.path_to_bgcolors_file):
         exit("Please specify a valid file using --path_to_bgcolors_file.")
 
-    if not args.debug_key:
-        exit("1: Please check debug_key.")
-    if not args.debug_value:
-        exit("2: Please check debug_value.")
     if not args.audio_accent:
-        exit("3: Please check audio_accent.")
-    if not args.path_to_key_image:
-        exit("4: Please check path_to_key_image.")
-    if not args.path_to_value_image:
-        exit("5: Please check path_to_value_image.")
-    if not args.path_to_key_audio:
-        exit("6: Please check path_to_key_audio.")
-    if not args.path_to_value_audio:
-        exit("7: Please check path_to_value_audio.")
+        exit("Please add --audio_accent.")
+
     if not args.path_to_output:
-        exit("8: Please check path_to_output.")
-    if not args.video_privacy_status:
-        exit(
-            "9: Please check video_privacy_status: {'public', 'private', 'unlisted'} ")
+        exit("Please add --path_to_output.")
 
 
 def read_bgcolors(path_to_bgcolors_file):
@@ -52,44 +40,59 @@ def read_bgcolors(path_to_bgcolors_file):
 
 
 def run_pipeline(args):
+    # CUSTOMIZE THESE PARAMETERS FOR THE VIDEO
+    key = "Empressite"
+    values = [
+        "Empressite is a mineral form of silver telluride, AgTe.",
+        "It is a rare, grey, orthorhombic mineral with which can form compact masses, rarely as bipyrimidal crystals.",
+        "Empressite is a mineral form of silver telluride, AgTe.",
+        "It is a rare, grey, orthorhombic mineral with which can form compact masses, rarely as bipyrimidal crystals.",
+        "Empressite is a mineral form of silver telluride, AgTe.",
+        "It is a rare, grey, orthorhombic mineral with which can form compact masses, rarely as bipyrimidal crystals.",
+    ]
+    
+    
     # Validate the args
     validate_args(args)
 
     # Read the colors file into memory once
     read_bgcolors(args.path_to_bgcolors_file)
-    print "Read " + str(len(colors)) + " colors for background."
+    print "[DEBUG] Read " + str(len(colors)) + " colors for background."
 
     # Choose bgcolour
     bg_color = tuple(
         map(int, colors[randint(0, len(colors) - 1)].split(',')))
+    print "[DEBUG] Background color: "
+    print bg_color
+
+    state = VideoGenerationState(key, values, bg_color, args.audio_accent, args.path_to_output)
 
     # Generate images
-    pil_key_image_generator.GenerateImage(args.debug_key,
-                                          args.path_to_key_image,
-                                          bg_color)
-    pil_value_image_generator.GenerateImage(args.debug_value,
-                                            args.path_to_value_image,
-                                            bg_color)
+    image_generator.GenerateImages(state)
+    # pil_key_image_generator.GenerateImage(args.debug_key,
+    #                                       args.path_to_key_image,
+    #                                       bg_color)
+    # pil_value_image_generator.GenerateImage(args.debug_value,
+    #                                         args.path_to_value_image,
+    #                                         bg_color)
 
     # Generate audio
-    gtts_audio_generator.GenerateAudio(args.debug_key,
-                                       args.path_to_key_audio,
-                                       args.audio_accent)
-    gtts_audio_generator.GenerateAudio(args.debug_value,
-                                       args.path_to_value_audio,
-                                       args.audio_accent)
+    # gtts_audio_generator.GenerateAudio(args.debug_key,
+    #                                    args.path_to_key_audio,
+    #                                    args.audio_accent)
+    # gtts_audio_generator.GenerateAudio(args.debug_value,
+    #                                    args.path_to_value_audio,
+    #                                    args.audio_accent)
 
     # Mux
-    ffmpeg_av_mux.AvMux(args.path_to_key_image, args.path_to_value_image,
-                        args.path_to_key_audio, args.path_to_value_audio,
-                        args.path_to_output)
+    # ffmpeg_av_mux.AvMux(args.path_to_output)
 
     # Upload
-    if args.upload_to_youtube.lower() in ("yes", "true", "t", "1"):
-        youtube_utils.UploadVideo(
-            args.debug_key, args.debug_value, args.path_to_output, args.video_privacy_status)
-    else:
-        print "Skipping youtube upload since flag is not enabled."
+    # if args.upload_to_youtube:
+    #     youtube_utils.UploadVideo(
+    #         args.debug_key, args.debug_value, args.path_to_output, "public")
+    # else:
+    #     print "Skipping youtube upload since flag is not enabled."
 
     print "================================================================"
     print "Successfully completed."
@@ -106,14 +109,7 @@ if __name__ == '__main__':
     argparser.add_argument("--audio_accent")
 
     # Debugging related flags
-    argparser.add_argument("--debug_key")
-    argparser.add_argument("--debug_value")
-    argparser.add_argument("--path_to_key_image")
-    argparser.add_argument("--path_to_value_image")
-    argparser.add_argument("--path_to_key_audio")
-    argparser.add_argument("--path_to_value_audio")
     argparser.add_argument("--path_to_output")
-    argparser.add_argument("--video_privacy_status")
 
     args = argparser.parse_args()
 
