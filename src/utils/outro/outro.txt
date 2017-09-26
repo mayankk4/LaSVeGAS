@@ -1,0 +1,15 @@
+Steps to generate the outro:
+
+python
+
+>>> from gtts import gTTS
+
+>>> text = “Thank you for watching this video. If you found the content helpful, please support us by liking the video and subscribing to the channel.”
+
+>>> ttsKey = gTTS(text=text, lang=“en-us”)
+>>> ttsKey.save(<audio_path>)
+
+
+exit python shell
+
+ffmpeg  -y -loop 1 -i <image_path/outro.png> -i <audio_path/outro.mp3> -c:v libx264 -c:a aac -strict experimental -b:a 348k -shortest <output_path/outro.mp4>

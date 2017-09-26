@@ -43,7 +43,7 @@ def StartExecution(key, path_to_status_file):
     if key in contents:
         status = int(contents[key])
         if status > 2:
-            return (False, "Video with key " + key + " has been already processed/uploaded so skipping..")
+            return (False, "Video with key " + key + " has been already processed/uploaded so skipping.")
     else:
         contents[key] = str(PIPELINE_VIDEO_PROCESSING_STATUS[1])
 

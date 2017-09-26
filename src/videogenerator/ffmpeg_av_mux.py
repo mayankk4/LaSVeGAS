@@ -25,6 +25,8 @@ def AvMux(state):
     print "Muxing the audio with the silent video."
 
     # subprocess is a blocking call.
+    cmd0 = "cp ./static/outro.mp4 " + state.path_to_output + "/outro.mp4"
+    subprocess.call(cmd0, shell=True)
 
     # Video for the key
     key_image_path = state.path_to_output + "/key_image.png"
@@ -46,13 +48,15 @@ def AvMux(state):
         cmd2 = "ffmpeg  -y -loop 1 -i " + value_image_path + " -i " + \
             value_audio_path + \
             " -c:v libx264 -c:a aac -strict experimental -b:a 348k -shortest " + value_output_path
-        state.path_to_output + "/value_audio" + str(i) + ".mp3"
         subprocess.call(cmd2, shell=True)
 
     cmd4 = "printf 'file \'key_video.mp4\'\n"
     for i in range(len(state.values)):
         cmd4 += "file \'value_video" + str(i) + ".mp4\'\n"
+    # Add outro
+    cmd4 += "file \'outro.mp4\'\n"
     cmd4 += "' > " + state.path_to_output + "/input_list.txt"
+    
     subprocess.call(cmd4, shell=True)
 
     cmd5 = "ffmpeg -y -f concat -i " + state.path_to_output + \
