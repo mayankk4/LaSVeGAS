@@ -56,7 +56,7 @@ def AvMux(state):
     # Add outro
     cmd4 += "file \'outro.mp4\'\n"
     cmd4 += "' > " + state.path_to_output + "/input_list.txt"
-    
+
     subprocess.call(cmd4, shell=True)
 
     cmd5 = "ffmpeg -y -f concat -i " + state.path_to_output + \
