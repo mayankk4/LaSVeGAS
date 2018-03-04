@@ -17,8 +17,8 @@ echo "Running lasvegas_tool for wikipedia."
 # clear folders except input.
 rm -R ./test-data/*
 # Activate virtual env
-echo "Activating virtual environment."
-source venv/bin/activate
+# echo "Activating virtual environment."
+# source venv/bin/activate
 
 echo '{}' > ./src/channels/wikipedia/contentgenerator/video_status
 
@@ -30,5 +30,5 @@ python ./src/channels/wikipedia/main.py \
 
 
 # deactivate virtual env
-echo "Dectivating virtual environment."
-deactivate
+# echo "Dectivating virtual environment."
+# deactivate

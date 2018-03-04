@@ -12,8 +12,8 @@ echo "Running lasvegas_tool."
 rm -R ./test-data/*
 
 # Activate virtual env
-echo "Activating virtual environment."
-source venv/bin/activate
+# echo "Activating virtual environment."
+# source lasvegas_env/bin/activate
 
 python ./src/lasvegas_debug.py \
   --path_to_bgcolors_file="./src/utils/bgcolor/modern_colors.txt" \
@@ -21,5 +21,5 @@ python ./src/lasvegas_debug.py \
   --audio_accent="en-us" \
 
 # deactivate virtual env
-echo "Dectivating virtual environment."
-deactivate
+# echo "Dectivating virtual environment."
+# deactivate
