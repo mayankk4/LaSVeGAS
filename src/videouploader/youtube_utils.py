@@ -13,13 +13,14 @@ import subprocess
 def constructVidProps(title, lines):
     title = title
     desc = '. '.join(lines)
-    category = '''22'''
+    category = '''27'''
 
-    tags = 'wikipedia, meaning, ' + ', '.join(list1)
+    tags = 'wikipedia, meaning, education'
     # Add keywords by breaking the description into words.
     words_in_lines = map(str.split, lines)
     for i in range(len(words_in_lines)):
-        tags += ', '.join(words_in_lines[i])
+        if (len(words_in_lines[i]) > 2):
+            tags += ', '.join(words_in_lines[i])
 
     return (title, desc, category, tags)
 
