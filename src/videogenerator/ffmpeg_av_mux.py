@@ -37,6 +37,7 @@ def AvMux(state):
         key_audio_path + " -c:v libx264 -c:a aac -strict experimental -b:a 348k -shortest " + key_output_path
     subprocess.call(cmd1, shell=True)
 
+    # Individual videos for each value
     i = 0
     for i in range(len(state.values)):
         value_image_path = state.path_to_output + \
@@ -50,20 +51,17 @@ def AvMux(state):
             " -c:v libx264 -c:a aac -strict experimental -b:a 348k -shortest " + value_output_path
         subprocess.call(cmd2, shell=True)
 
-    cmd4 = "printf 'file \'key_video.mp4\'\n"
+    # Create a list of input files for `melt`
+    input_video_files_list = "" 
+    input_video_files_list += key_video.mp4 + " "
     for i in range(len(state.values)):
-        cmd4 += "file \'value_video" + str(i) + ".mp4\'\n"
-    # Add outro
-    cmd4 += "file \'outro.mp4\'\n"
-    cmd4 += "' > " + state.path_to_output + "/input_list.txt"
+        input_video_files_list += "value_video" + str(i) + ".mp4 "
+    input_video_files_list += "outro.mp4"  # Add outro
 
-    subprocess.call(cmd4, shell=True)
 
-    cmd5 = "ffmpeg -loglevel 0 -hide_banner -y -f concat -i " + state.path_to_output + \
-        "/input_list.txt -c copy " + state.path_to_output + "/tmp.mp4"
+    cmd5 = "melt " + input_video_files_list + " -consumer avformat:tmp.mp4 acodec=libmp3lame vcodec=libx264"
     subprocess.call(cmd5, shell=True)
 
-    # TODO: FIX THIS SCRIPT, IT IS NOT TRANSFORMING THE VIDEO GENERATED ABOVE PROPERLY.
     output_path = state.path_to_output + "/final_output.mp4"
     cmd6 = "ffmpeg   -loglevel 0 -hide_banner -y -i " + state.path_to_output + "/tmp.mp4 -codec:v libx264 -crf 21 -bf 2 -flags +cgop -pix_fmt yuv420p -codec:a aac " + \
         "-strict -2 -b:a 348k -r:a 48000 -movflags faststart " + output_path
