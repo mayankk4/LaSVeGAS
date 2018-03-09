@@ -52,8 +52,7 @@ def AvMux(state):
         subprocess.call(cmd2, shell=True)
 
     # Create a list of input files for `melt`
-    input_video_files_list = "" 
-    input_video_files_list += key_video.mp4 + " "
+    input_video_files_list = "key_video.mp4 "
     for i in range(len(state.values)):
         input_video_files_list += "value_video" + str(i) + ".mp4 "
     input_video_files_list += "outro.mp4"  # Add outro
