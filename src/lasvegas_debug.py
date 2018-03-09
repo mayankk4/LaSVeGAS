@@ -44,8 +44,8 @@ def run_pipeline(args):
     values = [
         "Empressite is a mineral form of silver telluride, AgTe.",
         "It is a rare, grey, orthorhombic mineral with which can form compact masses, rarely as bipyrimidal crystals.",
-        # "Empressite is a mineral form of silver telluride, AgTe.",
-        # "It is a rare, grey, orthorhombic mineral with which can form compact masses, rarely as bipyrimidal crystals.",
+        "Empressite is a mineral form of silver telluride, AgTe.",
+        "It is a rare, grey, orthorhombic mineral with which can form compact masses, rarely as bipyrimidal crystals.",
         # "Empressite is a mineral form of silver telluride, AgTe.",
         # "It is a rare, grey, orthorhombic mineral with which can form compact masses, rarely as bipyrimidal crystals.",
     ]
