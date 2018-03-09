@@ -1,7 +1,5 @@
 # LaSVeGAS
-Design doc (Privately shared):
-https://docs.google.com/document/d/1OQABNMRc1sKBlmDgNly1RI8DmX0vEqEmCt6j4h7nEA4/edit#heading=h.7dzhdyi98xul
-
+[Design doc](https://docs.google.com/document/d/1OQABNMRc1sKBlmDgNly1RI8DmX0vEqEmCt6j4h7nEA4/edit#heading=h.7dzhdyi98xul) (Privately shared)
 
 ## Setup for Running the pipeline
 Install python and pip (We use Python 2.7)  
@@ -15,7 +13,7 @@ Install python and pip (We use Python 2.7)
 
     pip install gTTS
 
-### Setup for video muxing - 
+### Setup for video muxing
 For this, we need to install ffmpeg and melt since we simply invoke it using a subprocess. ffmpeg is used to attach audio to the images while melt is used to concat the videos.
 
     sudo apt-get install ffmpeg
@@ -23,11 +21,11 @@ For this, we need to install ffmpeg and melt since we simply invoke it using a s
 
 ### Setup for Uploading to youtube
 
-	pip install --upgrade oauth2client
-	pip install --upgrade google-api-python-client
+    pip install --upgrade oauth2client
+    pip install --upgrade google-api-python-client
 
 
-## Running the pipeline for a single KV pair.
+## Running the pipeline for a single KV pair
 
     time sh lasvegas_debug.sh
 

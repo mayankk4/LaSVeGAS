@@ -17,7 +17,8 @@ from imagegenerator import pil_value_image_generator
 
 def GenerateImages(state):
     pil_key_image_generator.GenerateImage(state.title,
-                                          state.path_to_output + "/key_image.png",
+                                          state.path_to_output +
+                                          "/key_image.png",
                                           state.bgcolor)
 
     for i in range(len(state.values)):

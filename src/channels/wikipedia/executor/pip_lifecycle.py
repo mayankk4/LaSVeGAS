@@ -3,11 +3,11 @@ import json
 import tempfile
 import csv
 
-''' Running status of pipeline video 
+''' Running status of pipeline video
 #
 	0: NOT PICKED FOR PROCESSING,
-	1: RUNNING, 
-	2: PICKED AND FAILED, 
+	1: RUNNING,
+	2: PICKED AND FAILED,
 	3: PICKED AND UPLOADED SUCCESSFULLY
 #
 '''
@@ -16,7 +16,7 @@ PIPELINE_VIDEO_PROCESSING_STATUS = [0, 1, 2, 3]
 
 '''
 #
-	Write-Replace pattern has been used here, the idea is to write updated contents 
+	Write-Replace pattern has been used here, the idea is to write updated contents
 	into a temporary file and replace it with the original file.
 #
 '''

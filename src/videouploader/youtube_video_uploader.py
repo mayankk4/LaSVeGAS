@@ -160,7 +160,8 @@ def resumable_upload(insert_request):
             if 'id' in response:
                 print "Video id '%s' was successfully uploaded." % response['id']
             else:
-                exit("The upload failed with an unexpected response: %s" % response)
+                exit("The upload failed with an unexpected response: %s" %
+                     response)
         except HttpError, e:
             if e.resp.status in RETRIABLE_STATUS_CODES:
                 error = "A retriable HTTP error %d occurred:\n%s" % (e.resp.status,
@@ -191,7 +192,8 @@ if __name__ == '__main__':
     argparser.add_argument("--category", default="22",
                            help="Numeric video category. " +
                            "See https://developers.google.com/youtube/v3/docs/videoCategories/list")
-    argparser.add_argument("--keywords", help="Video keywords, comma separated",
+    argparser.add_argument(
+        "--keywords", help="Video keywords, comma separated",
                            default="")
     argparser.add_argument("--privacyStatus", choices=VALID_PRIVACY_STATUSES,
                            default=VALID_PRIVACY_STATUSES[0], help="Video privacy status.")

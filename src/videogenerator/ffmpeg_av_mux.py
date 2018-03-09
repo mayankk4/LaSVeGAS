@@ -34,7 +34,9 @@ def AvMux(state):
     key_output_path = state.path_to_output + "/key_video.mp4"
 
     cmd1 = "ffmpeg  -loglevel 0 -hide_banner -y -loop 1 -i " + key_image_path + " -i " + \
-        key_audio_path + " -c:v libx264 -c:a aac -strict experimental -b:a 348k -shortest " + key_output_path
+        key_audio_path + \
+        " -c:v libx264 -c:a aac -strict experimental -b:a 348k -shortest " + \
+        key_output_path
     subprocess.call(cmd1, shell=True)
 
     # Individual videos for each value
@@ -48,17 +50,19 @@ def AvMux(state):
             "/value_video" + str(i) + ".mp4"
         cmd2 = "ffmpeg  -loglevel 0 -hide_banner -y -loop 1 -i " + value_image_path + " -i " + \
             value_audio_path + \
-            " -c:v libx264 -c:a aac -strict experimental -b:a 348k -shortest " + value_output_path
+            " -c:v libx264 -c:a aac -strict experimental -b:a 348k -shortest " + \
+            value_output_path
         subprocess.call(cmd2, shell=True)
 
     # Create a list of input files for `melt`
     input_video_files_list = state.path_to_output + "/key_video.mp4 "
     for i in range(len(state.values)):
-        input_video_files_list += state.path_to_output + "/value_video" + str(i) + ".mp4 "
+        input_video_files_list += state.path_to_output + \
+            "/value_video" + str(i) + ".mp4 "
     input_video_files_list += state.path_to_output + "/outro.mp4"  # Add outro
 
-
-    cmd5 = "melt " + input_video_files_list + " -consumer avformat:" + state.path_to_output + "/tmp.mp4 acodec=libmp3lame vcodec=libx264"
+    cmd5 = "melt " + input_video_files_list + " -consumer avformat:" + \
+        state.path_to_output + "/tmp.mp4 acodec=libmp3lame vcodec=libx264"
     subprocess.call(cmd5, shell=True)
 
     output_path = state.path_to_output + "/final_output.mp4"

@@ -72,7 +72,8 @@ def run_pipeline_prod(args):
         bg_color = tuple(
             map(int, colors[randint(0, len(colors) - 1)].split(',')))
 
-        # TODO: UPDATE THIS TO ADD A LIST OF LINES TO VALUE INSTEAD OF A SINGLE VALUE.
+        # TODO: UPDATE THIS TO ADD A LIST OF LINES TO VALUE INSTEAD OF A SINGLE
+        # VALUE.
         state = VideoGenerationState(
             key, [value, ], bg_color, args.audio_accent, args.path_to_output, args.upload_to_youtube)
         ProcessState(state)

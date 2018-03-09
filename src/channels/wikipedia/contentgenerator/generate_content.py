@@ -1,4 +1,4 @@
-"""  
+"""
 
 Script will download all the contents and titles and dump the data into a file
 
@@ -11,7 +11,8 @@ import json
 import traceback
 
 
-BLACKLIST_WIKI_ARTICLES_LIST = ['Main_Page', 'Special:Search', '404.php', 'Special:RecentChanges', 'Special:CreateAccount', 'Special:Book', 'XXX', 'Special:Watchlist', 'Special:MobileMenu', 'Special:CiteThisPage', 'Wikipedia', 'Special:ListUsers', 'Special:BlockList', 'Portal:Contents', 'Special:MobileOptions', 'Wiki', 'Wikipedia:About', 'Portal:Featured_content', '.xxx', 'Special:NewPagesFeed',
+BLACKLIST_WIKI_ARTICLES_LIST = [
+    'Main_Page', 'Special:Search', '404.php', 'Special:RecentChanges', 'Special:CreateAccount', 'Special:Book', 'XXX', 'Special:Watchlist', 'Special:MobileMenu', 'Special:CiteThisPage', 'Wikipedia', 'Special:ListUsers', 'Special:BlockList', 'Portal:Contents', 'Special:MobileOptions', 'Wiki', 'Wikipedia:About', 'Portal:Featured_content', '.xxx', 'Special:NewPagesFeed',
                                 'Help:Contents', 'Wikipedia:General_disclaimer', 'Category:All_articles_with_unsourced_statements', "Wikipedia:Today's_featured_article/July_3,_2015", 'Wikipedia:Selected_anniversaries/July', 'Special:RecentChangesLinked', 'Special:Log', 'Special:GlobalUsage', 'Special:Export', "Wikipedia:Today's_featured_article/July_23,_2015", 'User:GoogleAnalitycsRoman/google-api', 'Special:LinkSearch']
 
 WIKI_GET_TOP_ARTICLE_URL_API = "https://wikimedia.org/api/rest_v1/metrics/pageviews/top/$$PROJECT/$$ACCESS/$$YEAR/$$MONTH/$$DAY"
@@ -31,7 +32,7 @@ def parseDate(date):
 
 
 '''
-	get top 1k titles 
+	get top 1k titles
 '''
 
 
@@ -136,7 +137,7 @@ def IsDescriptionUnderAllowedCharLimit(titleDetailedInfo):
 
 
 '''
-	
+
 	generate detailed titles info, currently only supports search_limit as 1
 
 '''
@@ -174,8 +175,7 @@ def GenerateDetailedTitlesInfo():
                 print(traceback.format_exc())
             count = count + 1
 
-
- ########## __main() ###########
+ # __main() ###########
 TITLE_FILE = str(sys.argv[1])
 OUTPUT_FILE = str(sys.argv[2])
 start_date = "2015-07-01"

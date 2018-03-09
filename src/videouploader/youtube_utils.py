@@ -1,13 +1,13 @@
 import subprocess
 
-######
+#
 #
 # The class is the wrapper over google's youtube_video_uploader.py which supports video upload functionality on youtube
 # Upload video example:
 # python youtube_video_uploader.py --title 'test' --description 'valid description of the video' --file  final_output.mp4
 # Before running point CLIENT_SECRETS_FILE to valid 'client_secrets.json'
 #
-#####
+#
 
 
 def constructVidProps(title, lines):
