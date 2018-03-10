@@ -1,17 +1,16 @@
 #!/bin/sh
 
 ########### USAGE #################
-## time sh lasvegas_wikipedia.sh ##
+## time sh lasvegas_prod.sh ##
 ###################################
 
-## Spawns a single worker which processes a subset of data and uploads it to youtube.
-# Run this script from ./lasvegas
-echo "Running lasvegas_tool over production data."
+## Spawns a single worker which processes a shard of input data and uploads it to youtube.
+echo "Starting a LaSVeGAS prod worker."
 
 
 ################################################################################
 ################################################################################
-# IMPORTANT : PLEASE SPECIFY A SEPARATE path_to_output FOR EACH WORKER.
+# IMPORTANT : PLEASE SPECIFY A SEPARATE worker_id FOR EACH WORKER.
 ################################################################################
 ################################################################################
 

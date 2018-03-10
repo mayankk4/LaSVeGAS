@@ -1,4 +1,4 @@
-''' 
+'''
 *Binary* which runs a single worker which reads a shard of input, generates and
 uploads the video to youtube, and writes the final status of each processed key
 to a summary text file.
@@ -21,7 +21,7 @@ Required flags:
     Path to temp output folders. The path is common for all workers, however each
     worker will creat a separate sub-folder. This is needed to store various
     intermediate outputs as well as the final video just before uploading to
-    youtube. 
+    youtube.
     Note that the temp folder is cleared before processing each input. This is
     done in order to save un-necessary storage.
 
@@ -81,7 +81,6 @@ def validate_prod_args(args):
         exit("Please add --path_to_worker_summary.")
 
 
-
 def read_bgcolors(path_to_bgcolors_file):
     with open(path_to_bgcolors_file) as f:
         for line in f:
@@ -105,12 +104,12 @@ def run_pipeline_prod(args):
     read_bgcolors(args.path_to_bgcolors_file)
     print "Read " + str(len(colors)) + " colors for background."
 
-
     # Create various paths.
     input_file = args.path_to_worker_inputs + "input_shard_" + worker_id
     # Note: no / at the end of output path
     output_path = args.path_to_worker_outputs + "worker-" + worker_id
-    sumamry_file = args.path_to_worker_summary + "summary_worker_" + worker_id + ".txt"
+    sumamry_file = args.path_to_worker_summary + \
+        "summary_worker_" + worker_id + ".txt"
     print "Worker input file: " + input_file
     print "Worker summary file: " + sumamry_file
     print "Worker temp folder path: " + output_path
@@ -128,7 +127,7 @@ def run_pipeline_prod(args):
         "Empressite":  [
             "Empressite is a mineral form of silver telluride, AgTe. It is a rare, grey, orthorhombic mineral with which can form compact masses.",
             "Empressite is a mineral form of silver telluride, AgTe. It is a rare, grey, orthorhombic mineral with which can form compact masses.",
-            ],
+        ],
     }
 
     # For all the key,value in content file
@@ -150,7 +149,8 @@ def run_pipeline_prod(args):
         ProcessState(state)
 
         # Write final status to the summary file.
-        update_summary_command = "echo \"" + state.status + " | " + key + "\" >> " + sumamry_file
+        update_summary_command = "echo \"" + \
+            state.status + " | " + key + "\" >> " + sumamry_file
         subprocess.call(update_summary_command, shell=True)
 
         subprocess.call(clear_tmp_dir_command, shell=True)
