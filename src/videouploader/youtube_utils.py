@@ -15,7 +15,7 @@ def constructVidProps(title, lines):
     desc = '. '.join(lines)
     category = '''27'''
 
-    tags = 'wikipedia, meaning, education'
+    tags = 'wikipedia, meaning, education, wiki, mean'
     # Add keywords by breaking the description into words.
     words_in_lines = map(str.split, lines)
     for i in range(len(words_in_lines)):

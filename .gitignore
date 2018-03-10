@@ -7,6 +7,7 @@
 
 # Testdata
 /test-data/
+/prod-data/
 /src/utils/bgcolor/output/
 
 # Eclipse and mac

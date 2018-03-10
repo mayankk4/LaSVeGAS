@@ -54,5 +54,6 @@ class VideoGenerationState:
         self.upload_to_youtube = upload_to_youtube
 
         self.values = []
+        self.status = "OK"
 
         self.process()

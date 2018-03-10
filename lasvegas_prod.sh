@@ -4,8 +4,9 @@
 ## time sh lasvegas_wikipedia.sh ##
 ###################################
 
+## Spawns a single worker which processes a subset of data and uploads it to youtube.
 # Run this script from ./lasvegas
-echo "Running lasvegas_tool for wikipedia."
+echo "Running lasvegas_tool over production data."
 
 
 ################################################################################
@@ -14,21 +15,12 @@ echo "Running lasvegas_tool for wikipedia."
 ################################################################################
 ################################################################################
 
-# clear folders except input.
-rm -R ./test-data/*
-# Activate virtual env
-# echo "Activating virtual environment."
-# source venv/bin/activate
 
-echo '{}' > ./src/channels/wikipedia/contentgenerator/video_status
-
-python ./src/channels/wikipedia/main.py \
+python ./src/lasvegas_prod.py \
   --path_to_bgcolors_file="./src/utils/bgcolor/modern_colors.txt" \
-  --path_to_output="./test-data" \
-  --path_to_content="./src/channels/wikipedia/contentgenerator/video_contents"\
-  --path_to_status_file="./src/channels/wikipedia/contentgenerator/video_status"
-
-
-# deactivate virtual env
-# echo "Dectivating virtual environment."
-# deactivate
+  --audio_accent="en-us" \
+  --path_to_worker_inputs="./src/channels/wikipedia/contentgenerator/input-shards/"\
+  --path_to_worker_outputs="./prod-data/tmp/" \
+  --path_to_worker_summary="./prod-data/summary/" \
+  --upload_to_youtube=false \
+  --worker_id=1
