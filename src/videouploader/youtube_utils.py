@@ -26,7 +26,8 @@ def constructVidProps(title, lines):
 
 
 def UploadVideo(state):
-    if not state.upload_to_youtube:
+    # Note: state.upload_to_youtube is parsed as a string.
+    if state.upload_to_youtube == "False":
         print "Skipping youtube upload since flag is not enabled."
         return
 

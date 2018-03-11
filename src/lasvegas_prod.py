@@ -61,6 +61,7 @@ from channels.wikipedia.executor import *
 # List of colours which is read into memory from a text file.
 colors = []
 
+
 def validate_prod_args(args):
     if not args.path_to_bgcolors_file:
         exit("Please specify a valid file using --path_to_bgcolors_file.")
@@ -123,11 +124,10 @@ def run_pipeline_prod(args):
     WORKER_ERROR_COUNT = 0
     WORKER_KEYS_PROCESSED = 0
 
-
     # TODO: Read KV pairs from a content dump.
     key_values_pairs = {
         "Empressite":  [
-            "testing 123",
+            "testing123",
             # "Empressite is a mineral form of silver telluride, AgTe. It is a rare, grey, orthorhombic mineral with which can form compact masses.",
             # "Empressite is a mineral form of silver telluride, AgTe. It is a rare, grey, orthorhombic mineral with which can form compact masses.",
         ],
