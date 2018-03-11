@@ -1,5 +1,4 @@
-''' A worker which processes a single state. Multiple workers may
- be spawned parallely provided each one works in a different directory.
+''' A library which processes a single state.
 
 '''
 
@@ -11,17 +10,24 @@ from videouploader import *
 
 
 def ProcessState(state):
-    # Generate images
-    image_generator.GenerateImages(state)
+    try:
+        # Generate images
+        image_generator.GenerateImages(state)
 
-    # Generate audio
-    audio_generator.GenerateAudios(state)
+        # Generate audio
+        audio_generator.GenerateAudios(state)
 
-    # Mux
-    ffmpeg_av_mux.AvMux(state)
+        # Mux
+        ffmpeg_av_mux.AvMux(state)
 
-    # Upload
-    youtube_utils.UploadVideo(state)
+        # Upload
+        youtube_utils.UploadVideo(state)
+    except (KeyboardInterrupt, SystemExit):
+        raise
+    except Exception as e:
+        print(str(e))
+        state.status = "ERROR"
+
 
     print "================================================================"
     print "Successfully completed for key: " + state.title

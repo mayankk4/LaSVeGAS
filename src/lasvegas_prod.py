@@ -61,7 +61,6 @@ from channels.wikipedia.executor import *
 # List of colours which is read into memory from a text file.
 colors = []
 
-
 def validate_prod_args(args):
     if not args.path_to_bgcolors_file:
         exit("Please specify a valid file using --path_to_bgcolors_file.")
@@ -120,13 +119,17 @@ def run_pipeline_prod(args):
     clear_tmp_dir_command = "rm -Rf " + output_path + "/*"
     subprocess.call(clear_tmp_dir_command, shell=True)
 
-    # TODO: Update pipeline to set the state status everywhere.
+    # Records stats for this worker.
+    WORKER_ERROR_COUNT = 0
+    WORKER_KEYS_PROCESSED = 0
+
 
     # TODO: Read KV pairs from a content dump.
     key_values_pairs = {
         "Empressite":  [
-            "Empressite is a mineral form of silver telluride, AgTe. It is a rare, grey, orthorhombic mineral with which can form compact masses.",
-            "Empressite is a mineral form of silver telluride, AgTe. It is a rare, grey, orthorhombic mineral with which can form compact masses.",
+            "testing 123",
+            # "Empressite is a mineral form of silver telluride, AgTe. It is a rare, grey, orthorhombic mineral with which can form compact masses.",
+            # "Empressite is a mineral form of silver telluride, AgTe. It is a rare, grey, orthorhombic mineral with which can form compact masses.",
         ],
     }
 
@@ -150,8 +153,14 @@ def run_pipeline_prod(args):
 
         # Write final status to the summary file.
         update_summary_command = "echo \"" + \
-            state.status + " | " + key + "\" >> " + sumamry_file
+            state.status + " |||" + key + "\" >> " + sumamry_file
         subprocess.call(update_summary_command, shell=True)
+
+        WORKER_KEYS_PROCESSED += 1
+        if state.status != "OK":
+            WORKER_ERROR_COUNT += 1
+            if (WORKER_ERROR_COUNT > 10):
+                break
 
         subprocess.call(clear_tmp_dir_command, shell=True)
 
@@ -160,6 +169,8 @@ def run_pipeline_prod(args):
         print "================================================================"
 
     print "Finished running the pipeline."
+    print "Total keys processed: " + str(WORKER_KEYS_PROCESSED)
+    print "Total errors: " + str(WORKER_ERROR_COUNT)
 
 
 if __name__ == '__main__':
@@ -177,4 +188,5 @@ if __name__ == '__main__':
     argparser.add_argument("--upload_to_youtube", default=False)
 
     args = argparser.parse_args()
+
     run_pipeline_prod(args)
