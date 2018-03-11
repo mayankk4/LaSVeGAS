@@ -127,9 +127,8 @@ def run_pipeline_prod(args):
     # TODO: Read KV pairs from a content dump.
     key_values_pairs = {
         "Empressite":  [
-            "testing123",
-            # "Empressite is a mineral form of silver telluride, AgTe. It is a rare, grey, orthorhombic mineral with which can form compact masses.",
-            # "Empressite is a mineral form of silver telluride, AgTe. It is a rare, grey, orthorhombic mineral with which can form compact masses.",
+            "Empressite is a mineral form of silver telluride.",
+            "It is a rare, grey, orthorhombic mineral with which can form compact masses.",
         ],
     }
 
