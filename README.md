@@ -44,3 +44,12 @@ Please autolint the files before checking in.
 Do not check in the client_secrets
 
     git update-index --assume-unchanged path/to/client_secrets.json
+
+
+## One time setup for uploading videos
+
+1. Create a channel on youtube. Update preferences, monetization etc. Verify the account, add channel info.
+
+2. Create a project on console.developers.google.com, enable youtube data api for the project, create an 'Other' type of O-Auth client id in the project and download the client_secret file.
+
+3. A one time authentication for the account where we want to upload data is needed. After that uploads do not require authentication for a while.
