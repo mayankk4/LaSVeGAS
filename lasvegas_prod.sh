@@ -21,5 +21,5 @@ python ./src/lasvegas_prod.py \
   --path_to_worker_inputs="./src/channels/wikipedia/contentgenerator/input-shards/"\
   --path_to_worker_outputs="./prod-data/tmp/" \
   --path_to_worker_summary="./prod-data/summary/" \
-  --upload_to_youtube=False \
+  --upload_to_youtube=True \
   --worker_id=1

@@ -1,15 +1,19 @@
+'''
+Wrapper over Google's youtube_video_uploader.py which helps in 
+uploading a video to youtube.
+
+Before running point CLIENT_SECRETS_FILE in youtube_video_uploader.py
+to valid 'client_secrets.json'
+
+'''
+
+
 import subprocess
 
-#
-#
-# The class is the wrapper over google's youtube_video_uploader.py which supports video upload functionality on youtube
-# Upload video example:
-# python youtube_video_uploader.py --title 'test' --description 'valid description of the video' --file  final_output.mp4
-# Before running point CLIENT_SECRETS_FILE to valid 'client_secrets.json'
-#
-#
+from youtube_video_uploader import *
 
-
+# CUSTOMIZE THIS FUNCTION PER PROJECT.
+# Props for goodreads.
 def constructVidProps(title, lines):
     title = title
     desc = '. '.join(lines)
@@ -25,6 +29,10 @@ def constructVidProps(title, lines):
     return (title, desc, category, tags)
 
 
+class Object(object):
+    pass
+
+
 def UploadVideo(state):
     # Note: state.upload_to_youtube is parsed as a string.
     if state.upload_to_youtube == "False":
@@ -32,14 +40,14 @@ def UploadVideo(state):
         return
 
     title, desc, category, tags = constructVidProps(state.title, state.lines)
-    upload_cmd = ("python src/videouploader/youtube_video_uploader.py "
-                  " --title '" + str(title) + "'"
-                  " --description '" + str(desc) + "'"
-                  " --category '" +
-                  str(category) + "'"
-                  " --keywords '" +
-                  str(tags) + "'"
-                  " --file '" +
-                  str(state.path_to_output) + "/final_output.mp4" + "'"
-                  " --privacyStatus '" + "public") + "'"
-    subprocess.call(upload_cmd, shell=True)
+    file_path = str(state.path_to_output) + "/final_output.mp4"
+    a = Object()
+    a.title = str(title)
+    a.description = str(desc)
+    a.category = str(category)
+    a.keywords = str(tags)
+    a.file = file_path
+    a.privacyStatus = "public"
+    a.logging_level = ""
+
+    UploadToYoutube(a)

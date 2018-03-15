@@ -28,6 +28,4 @@ def ProcessState(state):
         print(str(e))
         state.status = "ERROR"
 
-    print "================================================================"
-    print "Successfully completed for key: " + state.title
-    print "================================================================"
+    print "Successfully completed uploading for key: " + state.title

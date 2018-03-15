@@ -126,9 +126,11 @@ def run_pipeline_prod(args):
 
     # TODO: Read KV pairs from a content dump.
     key_values_pairs = {
-        "Empressite":  [
-            "Empressite is a mineral form of silver telluride.",
-            "It is a rare, grey, orthorhombic mineral with which can form compact masses.",
+        "Metallica":  [
+            "Metallica is an American heavy metal band from Los Angeles, California.",
+            "The band was formed in 1981 by drummer Lars Ulrich and vocalist/guitarist James Hetfield.",
+            "The band's fast tempos, instrumentals and aggressive musicianship made them one of the founding 'big four' bands of thrash metal, alongside Megadeth, Anthrax and Slayer.",
+            "Metallica's current lineup comprises founding members Hetfield and Ulrich, longtime lead guitarist Kirk Hammett and bassist Robert Trujillo. Guitarist Dave Mustaine and bassists Ron McGovney, Cliff Burton and Jason Newsted are former members of the band.",
         ],
     }
 
@@ -161,7 +163,8 @@ def run_pipeline_prod(args):
             if (WORKER_ERROR_COUNT > 10):
                 break
 
-        subprocess.call(clear_tmp_dir_command, shell=True)
+        # TODO: Uncomment this.
+        # subprocess.call(clear_tmp_dir_command, shell=True)
 
         print "================================================================"
         print "Run successfully completed for title: " + key
