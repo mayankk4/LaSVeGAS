@@ -88,9 +88,6 @@ def read_bgcolors(path_to_bgcolors_file):
                 colors.append(line.split('(')[1].split(')')[0])
 
 
-#
-# TODO: try-catch for error free run
-#
 def run_pipeline_prod(args):
     # Validate the args
     validate_prod_args(args)
@@ -163,8 +160,7 @@ def run_pipeline_prod(args):
             if (WORKER_ERROR_COUNT > 10):
                 break
 
-        # TODO: Uncomment this.
-        # subprocess.call(clear_tmp_dir_command, shell=True)
+        subprocess.call(clear_tmp_dir_command, shell=True)
 
         print "================================================================"
         print "Run successfully completed for title: " + key
