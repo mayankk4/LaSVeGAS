@@ -10,7 +10,7 @@ class BookDescriptionSpider(scrapy.Spider):
     def start_requests(self):
         urls = []
 
-        fname = "topbooks/top-books-test.txt"
+        fname = "topbooks/merged_top_books.txt"
         with open(fname) as f:
             content = f.readlines()
         content = [x.strip() for x in content] 
@@ -23,9 +23,8 @@ class BookDescriptionSpider(scrapy.Spider):
             yield scrapy.Request(url=url, callback=self.parse)
 
     def parse(self, response):
-        print response.url
-
         title = response.xpath('//h1[@class="bookTitle"]/text()').extract_first().strip()
+        title = unicodedata.normalize('NFKD', title).encode('ascii','ignore')
 
         desc_list = response.xpath('//div[@id="description"]/span')
         num_desc = len(desc_list)
@@ -34,18 +33,27 @@ class BookDescriptionSpider(scrapy.Spider):
         if (num_desc == 0):
             desc = ""
         elif (num_desc == 1):
-            desc =  response.xpath('//div[@id="description"]/span')[0].extract()
-            unicodedata.normalize('NFKD', desc).encode('ascii','ignore')
-            desc = re.sub('<[^>]+>', '', desc)
+            desc =  desc_list[0].extract()
         else:
             temp_desc = ""
             for j in range(num_desc):
-                temp_desc = response.xpath('//div[@id="description"]/span')[j].extract()
-                unicodedata.normalize('NFKD', temp_desc).encode('ascii','ignore')
-                temp_desc = re.sub('<[^>]+>', '', temp_desc)
+                temp_desc = desc_list[j].extract()
                 if len(temp_desc) > len(desc):
                     desc = temp_desc
 
-        print "==============================================================="
-        print title + ":::::" + desc
-        print "==============================================================="
+        # process the description
+        # replace non-utf-8 chars with space
+        desc = ''.join([i if ord(i) < 128 else ' ' for i in desc])
+        # convert string to utf-8
+        desc = unicodedata.normalize('NFKD', desc).encode('ascii','ignore')
+        # replace text betewen < > with ' '
+        desc = re.sub('<[^>]+>', ' ', desc)
+        # replace multiple whitespaces with one
+        desc = ' '.join(desc.split())
+        
+        data = title + ":::::" + desc
+
+        book_id = str(response.url.split('/')[-1].split('.')[0].split('-')[0])
+        filename = 'description/book-%s.txt' % book_id
+        with open(filename, 'wb') as f:
+            f.write("%s\n" % data)
