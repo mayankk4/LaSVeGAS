@@ -1,0 +1,1 @@
+122066:::::Computer Science: A Structured Programming Approach Using C:::::The Second Edition of this useful book presents both computer science theory and C-language syntax with a principle-before-implementation approach. Forouzan and Gilberg continue to present a clear organizational structure, supplemented by easy-to-follow figures, charts, and tables.
