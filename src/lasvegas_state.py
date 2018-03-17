@@ -25,12 +25,13 @@ class VideoGenerationState:
 
     def process(self):
         i = 0
-        while (i < len(self.lines)):
-            curr_line = self.lines[i]
-            while ((i + 1) < len(self.lines)):
-                if ((len(curr_line) + len(self.lines[i + 1])) < self.page_character_limit):
+        lines = self.description.split('.')
+        while (i < len(lines)):
+            curr_line = lines[i]
+            while ((i + 1) < len(lines)):
+                if ((len(curr_line) + len(lines[i + 1])) < self.page_character_limit):
                     i += 1
-                    curr_line = curr_line + ' ' + self.lines[i]
+                    curr_line = curr_line + ' ' + lines[i]
                 else:
                     break
 
@@ -45,9 +46,10 @@ class VideoGenerationState:
         print "[DEBUG] Characters per page of video:"
         print map(len, self.values)
 
-    def __init__(self, title, lines, bgcolor, accent, path_to_output, upload_to_youtube):
+    def __init__(self, uid, title, description, bgcolor, accent, path_to_output, upload_to_youtube):
+        self.uid = uid
         self.title = title
-        self.lines = lines
+        self.description = description
         self.bgcolor = bgcolor
         self.accent = accent
         self.path_to_output = path_to_output
@@ -55,5 +57,7 @@ class VideoGenerationState:
 
         self.values = []
         self.status = "OK"
+
+        self.uploaded_video_id = "NOT_UPLOADED"
 
         self.process()

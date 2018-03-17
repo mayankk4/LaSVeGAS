@@ -105,11 +105,15 @@ def run_pipeline_prod(args):
     input_file = args.path_to_worker_inputs + "input_shard_" + worker_id
     # Note: no / at the end of output path
     output_path = args.path_to_worker_outputs + "worker-" + worker_id
-    sumamry_file = args.path_to_worker_summary + \
-        "summary_worker_" + worker_id + ".txt"
+    success_sumamry_file = args.path_to_worker_summary + \
+        "success_summary_worker_" + worker_id + ".txt"
+    failure_sumamry_file = args.path_to_worker_summary + \
+        "failure_summary_worker_" + worker_id + ".txt"
     print "Worker input file: " + input_file
-    print "Worker summary file: " + sumamry_file
+    print "Worker success summary file: " + success_sumamry_file
+    print "Worker failure summary file: " + failure_sumamry_file
     print "Worker temp folder path: " + output_path
+
     create_summary_path_command = "mkdir -p " + args.path_to_worker_summary
     subprocess.call(create_summary_path_command, shell=True)
     make_tmp_dir_command = "mkdir -p " + output_path
@@ -122,20 +126,28 @@ def run_pipeline_prod(args):
     WORKER_KEYS_PROCESSED = 0
 
     # TODO: Read KV pairs from a content dump.
-    key_values_pairs = {
-        "Metallica":  [
-            "Metallica is an American heavy metal band from Los Angeles, California.",
-            "The band was formed in 1981 by drummer Lars Ulrich and vocalist/guitarist James Hetfield.",
-            "The band's fast tempos, instrumentals and aggressive musicianship made them one of the founding 'big four' bands of thrash metal, alongside Megadeth, Anthrax and Slayer.",
-            "Metallica's current lineup comprises founding members Hetfield and Ulrich, longtime lead guitarist Kirk Hammett and bassist Robert Trujillo. Guitarist Dave Mustaine and bassists Ron McGovney, Cliff Burton and Jason Newsted are former members of the band.",
-        ],
-    }
+    data_to_upload = [
+        {
+         "uid": "12344",
+         "title": "Metallica",
+         "description": "Metallica is an American heavy metal band from Los Angeles, California.",
+        },
+        {
+         "uid": "12345",
+         "title": "Pink floyd",
+         "description": "Pink floyd is an American heavy metal band from Los Angeles, California.",
+        },
+    ]
 
     # For all the key,value in content file
-    for key, values in key_values_pairs.iteritems():
+    for data in data_to_upload:
+        uid = str(data['uid'])
+        title = str(data['title'])
+        description = str(data['description'])
+
         print "================================================================"
-        print "Running for title: " + key
-        print "Running for values: " + str(values)
+        print "Running for title: " + title
+        print "Description: " + description
         print "================================================================"
 
         # Clear all data in the temp folder.
@@ -146,12 +158,23 @@ def run_pipeline_prod(args):
             map(int, colors[randint(0, len(colors) - 1)].split(',')))
 
         state = VideoGenerationState(
-            key, values, bg_color, args.audio_accent, output_path, args.upload_to_youtube)
+            uid, title, description, bg_color, args.audio_accent, output_path, args.upload_to_youtube)
         ProcessState(state)
 
         # Write final status to the summary file.
-        update_summary_command = "echo \"" + \
-            state.status + " |||" + key + "\" >> " + sumamry_file
+        update_summary_command = ""
+        if state.status == "OK":
+            # status | title | uid | upload-id
+            update_summary_command = "echo \"" + \
+                state.status + ":::::" + title + ":::::" + \
+                uid + ":::::" + \
+                state.uploaded_video_id + "\" >> " + success_sumamry_file
+        else:
+            # status | title | uid
+            update_summary_command = "echo \"" + \
+                state.status + ":::::" + title + ":::::" + \
+                uid + "\" >> " + failure_sumamry_file
+
         subprocess.call(update_summary_command, shell=True)
 
         WORKER_KEYS_PROCESSED += 1
@@ -163,7 +186,7 @@ def run_pipeline_prod(args):
         subprocess.call(clear_tmp_dir_command, shell=True)
 
         print "================================================================"
-        print "Run successfully completed for title: " + key
+        print "Run successfully completed for title: " + title
         print "================================================================"
 
     print "Finished running the pipeline."

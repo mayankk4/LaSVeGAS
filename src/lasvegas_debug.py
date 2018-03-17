@@ -41,14 +41,8 @@ def run_pipeline(args):
     key = "Empressite"
 
     # Ensures multi-page video
-    values = [
-        "Empressite is a mineral form of silver telluride, AgTe.",
-        "It is a rare, grey, orthorhombic mineral with which can form compact masses, rarely as bipyrimidal crystals.",
-        "Empressite is a mineral form of silver telluride, AgTe.",
-        "It is a rare, grey, orthorhombic mineral with which can form compact masses, rarely as bipyrimidal crystals.",
-        # "Empressite is a mineral form of silver telluride, AgTe.",
-        # "It is a rare, grey, orthorhombic mineral with which can form compact masses, rarely as bipyrimidal crystals.",
-    ]
+    value = "testing123"
+    # value = "Empressite is a mineral form of silver telluride, AgTe. It is a rare, grey, orthorhombic mineral with which can form compact masses, rarely as bipyrimidal crystals."
 
     # Validate the args
     validate_args(args)
@@ -65,7 +59,7 @@ def run_pipeline(args):
 
     # Create a state and process it.
     state = VideoGenerationState(
-        key, values, bg_color, args.audio_accent, args.path_to_output, args.upload_to_youtube)
+        "123", key, value, bg_color, args.audio_accent, args.path_to_output, args.upload_to_youtube)
     ProcessState(state)
 
 

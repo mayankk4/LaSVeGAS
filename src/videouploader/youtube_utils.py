@@ -15,9 +15,9 @@ from youtube_video_uploader import *
 # Props for goodreads.
 
 
-def constructVidProps(title, lines):
+def constructVidProps(title, description):
     title = title
-    desc = '. '.join(lines)
+    desc = '. '.join(description)
     category = '''27'''
 
     keywords = 'wikipedia, meaning, education, wiki, means, definition, pronunciation, pronounce'
@@ -35,7 +35,7 @@ def UploadVideo(state):
         return
 
     title, desc, category, keywords = constructVidProps(
-        state.title, state.lines)
+        state.title, state.description)
     file_path = str(state.path_to_output) + "/final_output.mp4"
     args = Object()
     args.title = str(title)
@@ -46,4 +46,4 @@ def UploadVideo(state):
     args.privacyStatus = "public"
     args.logging_level = ""
 
-    UploadToYoutube(args)
+    UploadToYoutube(args, state)
